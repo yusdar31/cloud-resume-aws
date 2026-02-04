@@ -1,0 +1,47 @@
+name: Deploy Cloud Resume to AWS
+
+on:
+  push:
+    branches:
+      - main  # Robot hanya jalan kalau ada update di branch 'main'
+
+jobs:
+  deploy:
+    name: Terraform Apply & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Ambil kodingan dari repo
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 2. Install Terraform di komputer robot
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0
+
+    # 3. Login ke AWS pakai Kunci Rahasia tadi
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    # 4. Inisialisasi (Download plugin & Konek ke S3 State)
+    - name: Terraform Init
+      run: terraform init
+
+    # 5. Eksekusi Perubahan (Apply)
+    # -auto-approve artinya "langsung yes", jangan tanya user
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+
+    # 6. Bersihkan Cache CloudFront (Opsional tapi Recommended)
+    # Supaya update tampilan langsung terlihat user
+    # Kita ambil ID CloudFront dari Output Terraform
+    - name: Invalidate CloudFront
+      run: |
+        DIST_ID=$(terraform output -raw cloudfront_distribution_id)
+        aws cloudfront create-invalidation --distribution-id $DIST_ID --paths "/*"

@@ -109,3 +109,15 @@ resource "aws_cloudwatch_log_group" "lambda_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.visitor_counter.function_name}"
   retention_in_days = 7 # Simpan log cuma seminggu
 }
+
+terraform {
+
+
+  # INI BAGIAN PENTINGNYA
+  backend "s3" {
+    bucket  = "yusdar-tf-state-12345"  # <--- GANTI DENGAN NAMA BUCKET STEP 1 TADI
+    key     = "cloud-resume/terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
+}
