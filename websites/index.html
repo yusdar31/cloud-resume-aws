@@ -515,65 +515,125 @@
         </div>
 
         <div class="grid lg:grid-cols-3 gap-8">
-            <div class="p-10 rounded-[40px] glass border-white/5">
+            <!-- Category 1: Cloud & DevOps -->
+            <div class="p-10 rounded-[40px] glass border-white/5 hover:border-emerald/30 transition-all group">
                 <div class="flex items-center gap-4 mb-10 text-emerald font-bold text-lg">
-                    <i data-lucide="monitor"></i> Virtualization & OS
+                    <div
+                        class="p-3 rounded-xl bg-emerald/10 border border-emerald/20 group-hover:bg-emerald/20 transition-colors">
+                        <i data-lucide="cloud"></i>
+                    </div>
+                    Cloud & DevOps
                 </div>
                 <div class="space-y-6">
-                    <div class="flex justify-between text-xs text-white"><span>VMware ESXi / Hyper-V</span><span
-                            class="text-emerald">85%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald" style="width: 85%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>AWS (EC2, S3, Lambda,
+                                VPC)</span><span class="text-emerald">85%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 85%"></div>
+                        </div>
                     </div>
-
-                    <div class="flex justify-between text-xs text-white"><span>Proxmox VE</span><span
-                            class="text-emerald">80%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald" style="width: 80%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Terraform / IaC</span><span
+                                class="text-emerald">80%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 80%"></div>
+                        </div>
                     </div>
-
-                    <div class="flex justify-between text-xs text-white"><span>Citrix VDI</span><span
-                            class="text-emerald">75%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald" style="width: 75%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>CI/CD (GitHub
+                                Actions)</span><span class="text-emerald">75%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Linux / Bash
+                                Scripting</span><span class="text-emerald">80%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 80%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="p-10 rounded-[40px] glass border-white/5">
+            <!-- Category 2: Infrastructure & Virtualization -->
+            <div class="p-10 rounded-[40px] glass border-white/5 hover:border-emerald/30 transition-all group">
                 <div class="flex items-center gap-4 mb-10 text-emerald font-bold text-lg">
-                    <i data-lucide="network"></i> Networking
+                    <div
+                        class="p-3 rounded-xl bg-emerald/10 border border-emerald/20 group-hover:bg-emerald/20 transition-colors">
+                        <i data-lucide="server"></i>
+                    </div>
+                    Infrastructure & Virtualization
                 </div>
                 <div class="space-y-6">
-                    <div class="flex justify-between text-xs text-white"><span>Cisco Networking</span><span
-                            class="text-emerald">85%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald" style="width: 85%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>VMware ESXi /
+                                vCenter</span><span class="text-emerald">90%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 90%"></div>
+                        </div>
                     </div>
-
-                    <div class="flex justify-between text-xs text-white"><span>Mikrotik RouterOS</span><span
-                            class="text-emerald">85%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald" style="width: 85%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Citrix Virtual Apps &
+                                Desktops</span><span class="text-emerald">85%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Proxmox VE</span><span
+                                class="text-emerald">85%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Server Hardware
+                                (Cisco/HPE/Dell)</span><span class="text-emerald">80%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 80%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="p-10 rounded-[40px] glass border-white/5">
+            <!-- Category 3: Network & Security -->
+            <div class="p-10 rounded-[40px] glass border-white/5 hover:border-emerald/30 transition-all group">
                 <div class="flex items-center gap-4 mb-10 text-emerald font-bold text-lg">
-                    <i data-lucide="shield-check"></i> Security & Pentest
+                    <div
+                        class="p-3 rounded-xl bg-emerald/10 border border-emerald/20 group-hover:bg-emerald/20 transition-colors">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    Network & Security
                 </div>
                 <div class="space-y-6">
-                    <div class="flex justify-between text-xs text-white"><span>Palo Alto / F5</span><span
-                            class="text-emerald">60%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald" style="width: 60%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Network Eng
+                                (Cisco/Ruckus)</span><span class="text-emerald">90%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 90%"></div>
+                        </div>
                     </div>
-
-                    <div class="flex justify-between text-xs text-white"><span>Nmap / Burp Suite</span><span
-                            class="text-emerald">70%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald" style="width: 70%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Network Security (Fortinet/Palo
+                                Alto)</span><span class="text-emerald">80%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Hybrid Cloud
+                                Connectivity</span><span class="text-emerald">75%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Monitoring
+                                (CloudWatch/Grafana)</span><span class="text-emerald">80%</span></div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald" style="width: 80%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
