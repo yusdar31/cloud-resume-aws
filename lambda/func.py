@@ -24,6 +24,10 @@ def handler(event, context):
     # Kirim respon balik ke website (dengan Header CORS)
     return {
         'statusCode': 200,
-        # Hapus bagian 'headers' sama sekali
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+        },
         'body': json.dumps({"count": visitor_count})
     }

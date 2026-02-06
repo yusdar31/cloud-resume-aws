@@ -521,8 +521,14 @@
     </footer>
 
     <script>
-        // Inisialisasi Icon
-        lucide.createIcons();
+        // Inisialisasi Icon (with error handling)
+        try {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        } catch (e) {
+            console.warn('Lucide icons failed to load:', e);
+        }
 
         // --- MOBILE MENU FUNCTIONALITY ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -554,19 +560,33 @@
             });
         });
 
-        // Re-initialize icons after menu is opened
+        // Re-initialize icons after menu is opened (with error handling)
         mobileMenuBtn.addEventListener('click', () => {
-            setTimeout(() => lucide.createIcons(), 100);
+            setTimeout(() => {
+                try {
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                } catch (e) {
+                    console.warn('Lucide icons failed to reinitialize:', e);
+                }
+            }, 100);
         });
 
-        // --- VISITOR COUNTER LOGIC (REAL AWS LAMBDA) ---
-        const apiUrl = "https://uljlozkclnvziykbj76r5thl4q0nxyzn.lambda-url.us-east-1.on.aws/";
+        // --- VISITOR COUNTER LOGIC (API GATEWAY) ---
+        const apiUrl = "https://nfpsaxvwwd.execute-api.us-east-1.amazonaws.com/prod/count";
 
-        async function updateCounter(retryCount = 0) {
+        async function updateCounter() {
             const counterElement = document.getElementById('counter');
-            const maxRetries = 3;
+
+            if (!counterElement) {
+                console.error('Counter element not found!');
+                return;
+            }
 
             try {
+                console.log('Fetching visitor count from:', apiUrl);
+
                 const response = await fetch(apiUrl, {
                     method: 'GET',
                     headers: {
@@ -574,35 +594,35 @@
                     }
                 });
 
+                console.log('Response status:', response.status);
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const data = await response.json();
+                console.log('Response data:', data);
 
-                // Tampilkan angka dari Database DynamoDB dengan fade-in animation
+                // Tampilkan angka dari Database DynamoDB
                 counterElement.classList.remove('loading-shimmer');
                 counterElement.classList.add('fade-in');
                 counterElement.innerText = data.count.toLocaleString();
+                console.log('✅ Counter updated successfully!');
 
             } catch (error) {
-                console.error('Error fetching count:', error);
-
-                // Retry logic
-                if (retryCount < maxRetries) {
-                    console.log(`Retrying... (${retryCount + 1}/${maxRetries})`);
-                    setTimeout(() => updateCounter(retryCount + 1), 2000);
-                } else {
-                    // Show error after max retries
-                    counterElement.classList.remove('loading-shimmer');
-                    counterElement.innerText = "Offline";
-                    counterElement.classList.add("text-red-500");
-                }
+                console.error('❌ Error fetching count:', error);
+                counterElement.classList.remove('loading-shimmer');
+                counterElement.innerText = "Error";
+                counterElement.classList.add("text-red-500");
             }
         }
 
-        // Panggil fungsi saat website dibuka
-        updateCounter();
+        // Panggil fungsi setelah DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateCounter);
+        } else {
+            updateCounter();
+        }
     </script>
 </body>
 

@@ -10,3 +10,8 @@ output "cloudfront_distribution_id" {
   description = "ID dari CloudFront Distribution"
   value       = aws_cloudfront_distribution.s3_distribution.id
 }
+
+output "api_gateway_url" {
+  description = "API Gateway endpoint URL"
+  value       = "${aws_api_gateway_stage.prod.invoke_url}/count"
+}
