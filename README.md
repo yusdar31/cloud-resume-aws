@@ -2,7 +2,9 @@
 
 ![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazon-aws)
 ![Terraform](https://img.shields.io/badge/IaC-Terraform-purple?logo=terraform)
+![GitHub Actions](https://github.com/yusdar31/cloud-resume-aws/workflows/Deploy%20Cloud%20Resume%20to%20AWS/badge.svg)
 ![Status](https://img.shields.io/badge/Status-Live-success)
+![Cost](https://img.shields.io/badge/Cost-$0%2Fmonth-brightgreen)
 
 > A serverless cloud resume website built with AWS services, featuring a dynamic visitor counter and fully automated infrastructure deployment using Terraform.
 
@@ -349,10 +351,12 @@ cloud-resume-aws/
 
 ## 🔮 Future Improvements
 
+### **Completed:**
+- [x] **CI/CD Pipeline** - GitHub Actions for automated deployment ([See CICD.md](CICD.md))
+
 ### **High Priority:**
-- [ ] **CI/CD Pipeline** - GitHub Actions for automated deployment
 - [ ] **Custom Domain** - Route 53 + ACM for professional URL
-- [ ] **Monitoring Dashboard** - CloudWatch dashboard for metrics
+- [ ] **Monitoring Dashboard** - CloudFront dashboard for metrics
 
 ### **Medium Priority:**
 - [ ] **Unit Tests** - Pytest for Lambda function
