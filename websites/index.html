@@ -131,10 +131,63 @@
         .fade-in {
             animation: fadeIn 0.5s ease-out;
         }
+
+        /* Blob Animation for Background */
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
     </style>
 </head>
 
-<body class="overflow-x-hidden">
+<body class="bg-black text-gray-200 font-sans selection:bg-emerald/30 selection:text-white overflow-x-hidden relative">
+
+    <!-- Animated Background Effects -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <!-- Orb 1: Top Left -->
+        <div
+            class="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] bg-emerald/10 rounded-full blur-[120px] animate-blob">
+        </div>
+
+        <!-- Orb 2: Bottom Right -->
+        <div
+            class="absolute -bottom-[20%] -right-[10%] w-[70vw] h-[70vw] bg-teal-900/20 rounded-full blur-[120px] animate-blob animation-delay-2000">
+        </div>
+
+        <!-- Orb 3: Center (Subtle) -->
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-emerald/5 rounded-full blur-[100px] animate-pulse-slow">
+        </div>
+    </div>
 
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
