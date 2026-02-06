@@ -227,13 +227,28 @@
 
             <div class="relative hidden md:block">
                 <div
-                    class="w-full aspect-square glass rounded-[40px] flex items-center justify-center relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-emerald/5 to-transparent"></div>
-                    <i data-lucide="cpu" class="w-48 h-48 text-white/5 animate-pulse"></i>
+                    class="w-full aspect-square glass rounded-[40px] flex items-center justify-center relative overflow-hidden border border-emerald/20 group">
+                    <div class="absolute inset-0 bg-emerald/10 animate-pulse"></div>
+                    <img src="assets/profile.jpg" alt="Andi Yusdar Al Imran"
+                        class="w-full h-full object-cover relative z-10 transition-transform duration-500 group-hover:scale-105">
 
-                    <div class="absolute top-10 right-10 p-4 glass rounded-2xl border-emerald-glow">
-                        <div class="text-emerald font-bold">Bank Indonesia</div>
-                        <div class="text-[10px] text-gray-500 uppercase tracking-widest">On-Site Project</div>
+                    <!-- Overlay Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-20">
+                    </div>
+
+                    <!-- Floating Badge -->
+                    <div
+                        class="absolute bottom-6 left-6 right-6 p-4 glass rounded-2xl border border-emerald/20 backdrop-blur-md z-30 transform transition-all duration-300 group-hover:translate-y-[-5px]">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-emerald/20 rounded-lg text-emerald">
+                                <i data-lucide="user-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-bold">System Engineer</div>
+                                <div class="text-[10px] text-emerald uppercase tracking-widest font-bold">Open for Work
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
