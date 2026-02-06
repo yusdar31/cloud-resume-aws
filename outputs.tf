@@ -15,3 +15,8 @@ output "api_gateway_url" {
   description = "API Gateway endpoint URL"
   value       = "${aws_api_gateway_stage.prod.invoke_url}/count"
 }
+
+output "bucket_name" {
+  description = "Name of the S3 bucket"
+  value       = aws_s3_bucket.resume_bucket.id
+}

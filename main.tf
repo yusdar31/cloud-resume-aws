@@ -9,23 +9,8 @@ resource "random_string" "suffix" {
   upper   = false
 }
 
-# 2. Upload file index.html secara otomatis
-resource "aws_s3_object" "index" {
-  bucket       = aws_s3_bucket.resume_bucket.id
-  key          = "index.html"
-  source       = "./websites/index.html"
-  content_type = "text/html"
-  etag         = filemd5("./websites/index.html")
-}
+# File uploads are now handled by "aws s3 sync" in the CI/CD pipeline
 
-# 2b. Upload resume.html file
-resource "aws_s3_object" "resume" {
-  bucket       = aws_s3_bucket.resume_bucket.id
-  key          = "resume.html"
-  source       = "./websites/resume.html"
-  content_type = "text/html"
-  etag         = filemd5("./websites/resume.html")
-}
 
 
 

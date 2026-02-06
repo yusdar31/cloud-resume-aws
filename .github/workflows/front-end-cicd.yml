@@ -114,6 +114,12 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
 
+    - name: Sync Website Files to S3
+      run: |
+        BUCKET_NAME=$(terraform output -raw bucket_name)
+        aws s3 sync ./websites s3://$BUCKET_NAME --delete
+        echo "✅ Website files synced to S3: $BUCKET_NAME"
+
     - name: Get CloudFront Distribution ID
       id: cloudfront
       run: |

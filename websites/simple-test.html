@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Counter Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #result {
+            font-size: 48px;
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .success {
+            color: green;
+            border-color: green;
+        }
+
+        .error {
+            color: red;
+            border-color: red;
+        }
+
+        #log {
+            text-align: left;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 Simple Counter Test</h1>
+
+    <div id="result">Testing...</div>
+
+    <h3>Debug Log:</h3>
+    <div id="log"></div>
+
+    <script>
+        const logEl = document.getElementById('log');
+        const resultEl = document.getElementById('result');
+
+        function log(message) {
+            const time = new Date().toLocaleTimeString();
+            logEl.innerHTML += `[${time}] ${message}<br>`;
+            console.log(message);
+        }
+
+        log('Script started');
+
+        const apiUrl = "https://nfpsaxvwwd.execute-api.us-east-1.amazonaws.com/prod/count";
+        log(`API URL: ${apiUrl}`);
+
+        async function testAPI() {
+            try {
+                log('Starting fetch...');
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                log(`Response status: ${response.status}`);
+                log(`Response ok: ${response.ok}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                log(`Response data: ${JSON.stringify(data)}`);
+
+                resultEl.textContent = `Count: ${data.count}`;
+                resultEl.className = 'success';
+                log('✅ SUCCESS!');
+
+            } catch (error) {
+                log(`❌ ERROR: ${error.message}`);
+                log(`Error type: ${error.name}`);
+                log(`Full error: ${JSON.stringify(error, Object.getOwnPropertyNames(error))}`);
+
+                resultEl.textContent = `Error: ${error.message}`;
+                resultEl.className = 'error';
+            }
+        }
+
+        log('Calling testAPI()...');
+        testAPI();
+    </script>
+</body>
+
+</html>

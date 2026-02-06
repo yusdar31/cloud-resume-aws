@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Counter Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #10b981;
+        }
+
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .loading {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .counter {
+            font-size: 48px;
+            color: #10b981;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .details {
+            background: #f9fafb;
+            padding: 15px;
+            border-left: 4px solid #10b981;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 Visitor Counter API Test</h1>
+
+        <div id="status" class="status loading">
+            ⏳ Testing API connection...
+        </div>
+
+        <div class="counter" id="counter">--</div>
+
+        <button onclick="testAPI()">🔄 Test Again</button>
+
+        <div class="details" id="details">
+            Waiting for test results...
+        </div>
+
+        <h2>Troubleshooting Steps:</h2>
+        <ol>
+            <li><strong>Hard Refresh Browser:</strong> Ctrl+Shift+R (Windows) atau Cmd+Shift+R (Mac)</li>
+            <li><strong>Clear Browser Cache:</strong> Hapus cache untuk https://d150bm922en909.cloudfront.net</li>
+            <li><strong>Try Incognito/Private Mode:</strong> Buka website di incognito mode</li>
+            <li><strong>Check Browser Console:</strong> Tekan F12 → Console tab, lihat error messages</li>
+            <li><strong>Wait for CloudFront:</strong> Kadang butuh 1-2 menit untuk propagasi</li>
+        </ol>
+    </div>
+
+    <script>
+        const apiUrl = "https://nfpsaxvwwd.execute-api.us-east-1.amazonaws.com/prod/count";
+
+        async function testAPI() {
+            const statusEl = document.getElementById('status');
+            const counterEl = document.getElementById('counter');
+            const detailsEl = document.getElementById('details');
+
+            statusEl.className = 'status loading';
+            statusEl.textContent = '⏳ Testing API connection...';
+            counterEl.textContent = '--';
+            detailsEl.textContent = 'Sending request to Lambda...';
+
+            try {
+                const startTime = performance.now();
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(2);
+
+                detailsEl.innerHTML = `
+                    <strong>Request Details:</strong><br>
+                    URL: ${apiUrl}<br>
+                    Status: ${response.status} ${response.statusText}<br>
+                    Duration: ${duration}ms<br>
+                    Headers: ${JSON.stringify(Object.fromEntries(response.headers), null, 2)}
+                `;
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                statusEl.className = 'status success';
+                statusEl.textContent = '✅ API Connection Successful!';
+                counterEl.textContent = data.count.toLocaleString();
+
+                detailsEl.innerHTML += `<br><br><strong>Response Data:</strong><br>${JSON.stringify(data, null, 2)}`;
+
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.textContent = '❌ API Connection Failed';
+                counterEl.textContent = 'ERROR';
+
+                detailsEl.innerHTML += `<br><br><strong>Error:</strong><br>${error.message}<br><br>`;
+                detailsEl.innerHTML += `<strong>Possible Causes:</strong><br>`;
+                detailsEl.innerHTML += `- CORS policy blocking the request<br>`;
+                detailsEl.innerHTML += `- Lambda function timeout<br>`;
+                detailsEl.innerHTML += `- Network connectivity issue<br>`;
+                detailsEl.innerHTML += `- Browser cache serving old version<br>`;
+
+                console.error('Full error:', error);
+            }
+        }
+
+        // Auto-run test on page load
+        testAPI();
+    </script>
+</body>
+
+</html>
