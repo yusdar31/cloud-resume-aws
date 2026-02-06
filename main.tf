@@ -15,8 +15,18 @@ resource "aws_s3_object" "index" {
   key          = "index.html"
   source       = "./websites/index.html"
   content_type = "text/html"
-  etag = filemd5("./websites/index.html")
+  etag         = filemd5("./websites/index.html")
 }
+
+# 2b. Upload resume.html file
+resource "aws_s3_object" "resume" {
+  bucket       = aws_s3_bucket.resume_bucket.id
+  key          = "resume.pdf"
+  source       = "./websites/resume.html"
+  content_type = "text/html"
+  etag         = filemd5("./websites/resume.html")
+}
+
 
 # 3. CloudFront Origin Access Control (OAC)
 resource "aws_cloudfront_origin_access_control" "default" {

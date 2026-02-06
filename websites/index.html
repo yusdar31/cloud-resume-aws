@@ -1,24 +1,139 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Andi Yusdar - Cloud Resume Challenge</title>
+    <meta name="description"
+        content="Andi Yusdar Al Imran - System Engineer dengan pengalaman dalam infrastruktur IT, virtualisasi VMware/Hyper-V, dan jaringan multi-vendor. Berfokus pada cloud engineering dan DevOps.">
+    <meta name="keywords"
+        content="System Engineer, Cloud Engineer, AWS, Terraform, VMware, Citrix, Network Infrastructure, DevOps">
+    <meta name="author" content="Andi Yusdar Al Imran">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Andi Yusdar Al Imran - System & Cloud Engineer">
+    <meta property="og:description"
+        content="System Engineer dengan pengalaman dalam infrastruktur IT, virtualisasi, dan cloud computing. AWS Cloud Resume Challenge.">
+    <meta property="og:image"
+        content="https://via.placeholder.com/1200x630/10b981/ffffff?text=Andi+Yusdar+-+Cloud+Engineer">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Andi Yusdar Al Imran - System & Cloud Engineer">
+    <meta name="twitter:description"
+        content="System Engineer dengan pengalaman dalam infrastruktur IT, virtualisasi, dan cloud computing.">
+    <meta name="twitter:image"
+        content="https://via.placeholder.com/1200x630/10b981/ffffff?text=Andi+Yusdar+-+Cloud+Engineer">
+
+    <title>Andi Yusdar Al Imran - Cloud Resume Challenge</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: black; color: #d1d5db; scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); }
-        .text-emerald { color: #10b981; }
-        .bg-emerald { background-color: #10b981; }
-        .border-emerald-glow { border-color: rgba(16, 185, 129, 0.3); box-shadow: 0 0 15px rgba(16, 185, 129, 0.1); }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: black;
+            color: #d1d5db;
+            scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .text-emerald {
+            color: #10b981;
+        }
+
+        .bg-emerald {
+            background-color: #10b981;
+        }
+
+        .border-emerald-glow {
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Loading Animation */
+        @keyframes shimmer {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .loading-shimmer {
+            animation: shimmer 1.5s ease-in-out infinite;
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
     </style>
 </head>
+
 <body class="overflow-x-hidden">
 
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
@@ -26,6 +141,8 @@
             <div class="text-xl font-bold text-white tracking-tight">
                 Andi Yusdar <span class="text-emerald">Al Imran</span>
             </div>
+
+            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="#about" class="hover:text-emerald transition-colors">About</a>
                 <a href="#journey" class="hover:text-emerald transition-colors">Journey</a>
@@ -33,17 +150,42 @@
                 <a href="#projects" class="hover:text-emerald transition-colors">Projects</a>
                 <a href="#contact" class="hover:text-emerald transition-colors">Contact</a>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menu-overlay" class="menu-overlay fixed inset-0 bg-black/80 backdrop-blur-sm z-40"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="mobile-menu fixed top-0 right-0 h-full w-64 bg-black border-l border-white/10 z-50 p-8">
+        <button id="close-menu-btn" class="absolute top-6 right-6 text-white hover:text-emerald transition-colors">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+
+        <div class="flex flex-col gap-6 mt-16 text-lg font-medium">
+            <a href="#about" class="mobile-menu-link hover:text-emerald transition-colors">About</a>
+            <a href="#journey" class="mobile-menu-link hover:text-emerald transition-colors">Journey</a>
+            <a href="#skills" class="mobile-menu-link hover:text-emerald transition-colors">Skills</a>
+            <a href="#projects" class="mobile-menu-link hover:text-emerald transition-colors">Projects</a>
+            <a href="#contact" class="mobile-menu-link hover:text-emerald transition-colors">Contact</a>
+        </div>
+    </div>
 
     <section id="about" class="min-h-screen flex flex-col justify-center px-6 max-w-7xl mx-auto pt-20">
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="space-y-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald/10 border border-emerald/20 text-emerald text-xs font-medium">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald/10 border border-emerald/20 text-emerald text-xs font-medium">
                     <span class="w-2 h-2 rounded-full bg-emerald animate-pulse"></span>
                     Open Work as Cloud Engineer
                 </div>
-                
+
                 <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
                     Hi, I'm <br>
                     <span class="text-emerald">Andi Yusdar</span><br>
@@ -51,36 +193,44 @@
                 </h1>
 
                 <div class="flex flex-wrap gap-3">
-                    <span class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
+                    <span
+                        class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
                         <i data-lucide="server" class="w-4 h-4"></i> System Engineer
                     </span>
-                    <span class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
+                    <span
+                        class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
                         <i data-lucide="network" class="w-4 h-4"></i> Network Infrastructure
                     </span>
-                    <span class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
+                    <span
+                        class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
                         <i data-lucide="shield-check" class="w-4 h-4"></i> IT Support
                     </span>
                 </div>
 
                 <p class="text-lg text-gray-400 max-w-xl leading-relaxed">
-                    Seorang <span class="text-white font-medium">System Engineer</span> yang berpengalaman dalam mengelola infrastruktur IT skala besar, virtualisasi, dan jaringan multi-vendor. Berfokus pada <span class="text-emerald">stabilitas sistem</span> dan efisiensi teknologi.
+                    Seorang <span class="text-white font-medium">System Engineer</span> yang berpengalaman dalam
+                    mengelola infrastruktur IT skala besar, virtualisasi, dan jaringan multi-vendor. Berfokus pada <span
+                        class="text-emerald">stabilitas sistem</span> dan efisiensi teknologi.
                 </p>
 
                 <div class="flex flex-wrap gap-4">
-                    <button class="flex items-center gap-2 px-8 py-4 bg-emerald hover:bg-emerald/80 text-black font-bold rounded-xl transition-all shadow-lg shadow-emerald/20">
+                    <a href="resume.pdf" download="Andi_Yusdar_Resume.pdf"
+                        class="flex items-center gap-2 px-8 py-4 bg-emerald hover:bg-emerald/80 text-black font-bold rounded-xl transition-all shadow-lg shadow-emerald/20">
                         <i data-lucide="download" class="w-5 h-5"></i> Download Resume
-                    </button>
-                    <a href="#journey" class="flex items-center gap-2 px-8 py-4 border border-white/20 hover:border-emerald/50 hover:text-emerald text-white font-bold rounded-xl transition-all">
+                    </a>
+                    <a href="#journey"
+                        class="flex items-center gap-2 px-8 py-4 border border-white/20 hover:border-emerald/50 hover:text-emerald text-white font-bold rounded-xl transition-all">
                         View Journey <i data-lucide="chevron-right" class="w-5 h-5"></i>
                     </a>
                 </div>
             </div>
 
             <div class="relative hidden md:block">
-                <div class="w-full aspect-square glass rounded-[40px] flex items-center justify-center relative overflow-hidden">
+                <div
+                    class="w-full aspect-square glass rounded-[40px] flex items-center justify-center relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-emerald/5 to-transparent"></div>
                     <i data-lucide="cpu" class="w-48 h-48 text-white/5 animate-pulse"></i>
-                    
+
                     <div class="absolute top-10 right-10 p-4 glass rounded-2xl border-emerald-glow">
                         <div class="text-emerald font-bold">Bank Indonesia</div>
                         <div class="text-[10px] text-gray-500 uppercase tracking-widest">On-Site Project</div>
@@ -97,14 +247,17 @@
         </div>
 
         <div class="space-y-12">
-            <div class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
+            <div
+                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="text-emerald font-bold space-y-2">
                     <div class="text-sm uppercase tracking-widest opacity-60 text-white">Nov 2025 - Saat ini</div>
                     <div class="text-xs">PT. Mastersystem Infotama</div>
-                    <div class="inline-block px-2 py-1 bg-emerald/10 text-[10px] rounded border border-emerald/20 mt-2">On-Site Bank Indonesia</div>
+                    <div class="inline-block px-2 py-1 bg-emerald/10 text-[10px] rounded border border-emerald/20 mt-2">
+                        On-Site Bank Indonesia</div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">System Engineer</h3>
+                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">System Engineer
+                    </h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-start gap-3">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald shrink-0 mt-0.5"></i>
@@ -122,13 +275,15 @@
                 </div>
             </div>
 
-            <div class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
+            <div
+                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="text-emerald font-bold space-y-2">
                     <div class="text-sm uppercase tracking-widest opacity-60 text-white">Jan 2025 - Des 2025</div>
                     <div class="text-xs">Mitra Visindo Teknologi</div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">IT Network Infrastructure</h3>
+                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">IT Network
+                        Infrastructure</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-start gap-3">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald shrink-0 mt-0.5"></i>
@@ -142,13 +297,15 @@
                 </div>
             </div>
 
-            <div class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
+            <div
+                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="text-emerald font-bold space-y-2">
                     <div class="text-sm uppercase tracking-widest opacity-60 text-white">Jan 2025 - Des 2025</div>
                     <div class="text-xs">PT Surabaya Industrial Estate Rungkut</div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">IT Support Technician</h3>
+                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">IT Support
+                        Technician</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-start gap-3">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald shrink-0 mt-0.5"></i>
@@ -175,14 +332,23 @@
                     <i data-lucide="monitor"></i> Virtualization & OS
                 </div>
                 <div class="space-y-6">
-                    <div class="flex justify-between text-xs text-white"><span>VMware ESXi / Hyper-V</span><span class="text-emerald">85%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald" style="width: 85%"></div></div>
-                    
-                    <div class="flex justify-between text-xs text-white"><span>Proxmox VE</span><span class="text-emerald">80%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald" style="width: 80%"></div></div>
+                    <div class="flex justify-between text-xs text-white"><span>VMware ESXi / Hyper-V</span><span
+                            class="text-emerald">85%</span></div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald" style="width: 85%"></div>
+                    </div>
 
-                    <div class="flex justify-between text-xs text-white"><span>Citrix VDI</span><span class="text-emerald">75%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald" style="width: 75%"></div></div>
+                    <div class="flex justify-between text-xs text-white"><span>Proxmox VE</span><span
+                            class="text-emerald">80%</span></div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald" style="width: 80%"></div>
+                    </div>
+
+                    <div class="flex justify-between text-xs text-white"><span>Citrix VDI</span><span
+                            class="text-emerald">75%</span></div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald" style="width: 75%"></div>
+                    </div>
                 </div>
             </div>
 
@@ -191,11 +357,17 @@
                     <i data-lucide="network"></i> Networking
                 </div>
                 <div class="space-y-6">
-                    <div class="flex justify-between text-xs text-white"><span>Cisco Networking</span><span class="text-emerald">85%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald" style="width: 85%"></div></div>
-                    
-                    <div class="flex justify-between text-xs text-white"><span>Mikrotik RouterOS</span><span class="text-emerald">85%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald" style="width: 85%"></div></div>
+                    <div class="flex justify-between text-xs text-white"><span>Cisco Networking</span><span
+                            class="text-emerald">85%</span></div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald" style="width: 85%"></div>
+                    </div>
+
+                    <div class="flex justify-between text-xs text-white"><span>Mikrotik RouterOS</span><span
+                            class="text-emerald">85%</span></div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald" style="width: 85%"></div>
+                    </div>
                 </div>
             </div>
 
@@ -204,11 +376,132 @@
                     <i data-lucide="shield-check"></i> Security & Pentest
                 </div>
                 <div class="space-y-6">
-                    <div class="flex justify-between text-xs text-white"><span>Palo Alto / F5</span><span class="text-emerald">60%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald" style="width: 60%"></div></div>
-                    
-                    <div class="flex justify-between text-xs text-white"><span>Nmap / Burp Suite</span><span class="text-emerald">70%</span></div>
-                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald" style="width: 70%"></div></div>
+                    <div class="flex justify-between text-xs text-white"><span>Palo Alto / F5</span><span
+                            class="text-emerald">60%</span></div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald" style="width: 60%"></div>
+                    </div>
+
+                    <div class="flex justify-between text-xs text-white"><span>Nmap / Burp Suite</span><span
+                            class="text-emerald">70%</span></div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl font-bold text-white">Featured <span class="text-emerald">Projects</span></h2>
+            <p class="mt-4 text-gray-500">Proyek-proyek yang telah saya kerjakan</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Project 1: Cloud Resume Challenge -->
+            <div class="group p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
+                        <i data-lucide="cloud" class="w-6 h-6 text-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">Cloud Resume
+                        Challenge</h3>
+                </div>
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                    Website resume yang di-deploy di AWS menggunakan S3, CloudFront, Lambda, DynamoDB, dan Terraform
+                    untuk Infrastructure as Code. Dilengkapi dengan CI/CD pipeline menggunakan GitHub Actions.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">AWS</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">Terraform</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">Lambda</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">CI/CD</span>
+                </div>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>2026</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="activity" class="w-3 h-3"></i>
+                        <span>Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Infrastructure Automation -->
+            <div class="group p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
+                        <i data-lucide="server" class="w-6 h-6 text-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">Infrastructure
+                        Automation</h3>
+                </div>
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                    Otomasi deployment dan konfigurasi infrastruktur VMware ESXi, Hyper-V, dan Citrix VDI menggunakan
+                    scripting dan automation tools untuk meningkatkan efisiensi operasional.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">VMware</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">PowerShell</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">Ansible</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">Citrix</span>
+                </div>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>2025</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="briefcase" class="w-3 h-3"></i>
+                        <span>Enterprise</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Network Security Implementation -->
+            <div class="group p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
+                        <i data-lucide="shield" class="w-6 h-6 text-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">Network Security
+                    </h3>
+                </div>
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                    Implementasi solusi keamanan jaringan multi-vendor termasuk Cisco, Palo Alto, dan F5. Melakukan
+                    konfigurasi firewall, VPN, dan security policies untuk infrastruktur enterprise.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">Cisco</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">Palo
+                        Alto</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">F5</span>
+                    <span
+                        class="px-3 py-1 text-xs rounded-full bg-emerald/10 text-emerald border border-emerald/20">VPN</span>
+                </div>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>2025</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                        <span>Security</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -217,10 +510,11 @@
     <footer id="contact" class="py-20 px-6 border-t border-white/5 text-center space-y-8">
         <div class="flex flex-col items-center gap-4">
             <h2 class="text-2xl font-bold text-white">Let's Connect</h2>
-            <div class="flex items-center gap-4 px-6 py-3 rounded-full glass border-white/10 hover:border-emerald/50 transition-colors">
+            <div
+                class="flex items-center gap-4 px-6 py-3 rounded-full glass border-white/10 hover:border-emerald/50 transition-colors">
                 <i data-lucide="eye" class="text-emerald w-5 h-5"></i>
                 <span class="text-sm font-medium">Visitor Count:</span>
-                <span id="counter" class="text-emerald font-bold font-mono text-lg animate-pulse">...</span>
+                <span id="counter" class="text-emerald font-bold font-mono text-lg loading-shimmer">Loading...</span>
             </div>
         </div>
         <p class="text-gray-500 text-sm">&copy; 2026 Andi Yusdar Al Imran | AWS Cloud Resume Challenge</p>
@@ -230,30 +524,80 @@
         // Inisialisasi Icon
         lucide.createIcons();
 
+        // --- MOBILE MENU FUNCTIONALITY ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+        menuOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close menu when clicking on a link
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+
+        // Re-initialize icons after menu is opened
+        mobileMenuBtn.addEventListener('click', () => {
+            setTimeout(() => lucide.createIcons(), 100);
+        });
+
         // --- VISITOR COUNTER LOGIC (REAL AWS LAMBDA) ---
-        // Ganti URL ini dengan URL Lambda kamu yang sudah fix tadi
         const apiUrl = "https://uljlozkclnvziykbj76r5thl4q0nxyzn.lambda-url.us-east-1.on.aws/";
 
-        async function updateCounter() {
+        async function updateCounter(retryCount = 0) {
             const counterElement = document.getElementById('counter');
-            
+            const maxRetries = 3;
+
             try {
-                const response = await fetch(apiUrl);
-                
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const data = await response.json();
-                
-                // Tampilkan angka dari Database DynamoDB
-                counterElement.innerText = data.count;
-                counterElement.classList.remove('animate-pulse'); // Hentikan animasi loading
-                
+
+                // Tampilkan angka dari Database DynamoDB dengan fade-in animation
+                counterElement.classList.remove('loading-shimmer');
+                counterElement.classList.add('fade-in');
+                counterElement.innerText = data.count.toLocaleString();
+
             } catch (error) {
                 console.error('Error fetching count:', error);
-                counterElement.innerText = "OFFLINE";
-                counterElement.classList.add("text-red-500");
+
+                // Retry logic
+                if (retryCount < maxRetries) {
+                    console.log(`Retrying... (${retryCount + 1}/${maxRetries})`);
+                    setTimeout(() => updateCounter(retryCount + 1), 2000);
+                } else {
+                    // Show error after max retries
+                    counterElement.classList.remove('loading-shimmer');
+                    counterElement.innerText = "Offline";
+                    counterElement.classList.add("text-red-500");
+                }
             }
         }
 
@@ -261,4 +605,5 @@
         updateCounter();
     </script>
 </body>
+
 </html>
