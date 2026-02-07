@@ -420,9 +420,9 @@ This project demonstrates skills relevant to:
 **Andi Yusdar Al Imran**
 
 - 🌐 Website: [https://d150bm922en909.cloudfront.net](https://d150bm922en909.cloudfront.net)
-- 💼 LinkedIn: [Your LinkedIn]
-- 🐙 GitHub: [Your GitHub]
-- 📧 Email: your.email@example.com
+- 💼 LinkedIn: (https://www.linkedin.com/in/andiyusdaralimran/)
+- 🐙 GitHub: (https://github.com/yusdar31)
+- 📧 Email: andiyusdaralimran@gmail.com
 
 ---
 
