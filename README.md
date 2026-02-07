@@ -202,6 +202,33 @@ cloud-resume-aws/
 
 ---
 
+## 🐳 Run Locally with Docker
+
+You can run the frontend website locally using Docker to test changes before deploying.
+
+### **Prerequisites**
+- Docker installed
+- Docker Compose installed
+
+### **Quick Start**
+
+1.  **Build and Run**
+    ```bash
+    docker-compose up -d --build
+    ```
+
+2.  **Access the Website**
+    Open your browser and visit: [http://localhost:8080](http://localhost:8080)
+
+3.  **Stop the Container**
+    ```bash
+    docker-compose down
+    ```
+
+---
+
+---
+
 ## 🚀 Deployment
 
 ### **Prerequisites:**
