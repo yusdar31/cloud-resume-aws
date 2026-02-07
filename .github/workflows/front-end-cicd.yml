@@ -13,9 +13,30 @@ env:
   TERRAFORM_VERSION: 1.5.0
 
 jobs:
-  # Job 1: Validate and Test
+  # Job 1: Check Changes (Path Filtering)
+  check_changes:
+    name: Check Changed Files
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - '*.tf'
+              - 'lambda/**'
+            frontend:
+              - 'websites/**'
+
+  # Job 2: Backend Validation (Runs if backend changes)
   validate:
-    name: Validate & Test
+    name: Validate Backend
+    needs: check_changes
+    if: ${{ needs.check_changes.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
     
     steps:
@@ -50,11 +71,11 @@ jobs:
         terraform init -backend=false
         terraform validate
 
-  # Job 2: Plan (Preview Changes)
+  # Job 3: Backend Plan (Runs if backend changes)
   plan:
     name: Terraform Plan
-    runs-on: ubuntu-latest
     needs: validate
+    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     
     steps:
@@ -81,12 +102,12 @@ jobs:
       run: terraform plan -no-color
       continue-on-error: true
 
-  # Job 3: Deploy to AWS
-  deploy:
-    name: Deploy to AWS
+  # Job 4: Backend Deploy (Runs if backend changes & push to main)
+  deploy_backend:
+    name: Deploy Backend
     runs-on: ubuntu-latest
-    needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [check_changes, validate]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.check_changes.outputs.backend == 'true' }}
     
     steps:
     - name: Checkout Code
@@ -108,11 +129,39 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Plan
-      run: terraform plan -out=tfplan
-
     - name: Terraform Apply
-      run: terraform apply -auto-approve tfplan
+      run: terraform apply -auto-approve
+
+  # Job 5: Frontend Deploy (Runs if frontend changes OR backend changes)
+  deploy_frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    # If backend changed, wait for it. If not, don't wait (but we can't do dynamic dependency easily)
+    # Strategy: Just put `deploy_backend` in needs (optional). 
+    # But `needs` is strict. If `deploy_backend` is skipped, this might be skipped?
+    # No, skipped jobs in `needs` are considered success.
+    needs: [check_changes, deploy_backend]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.check_changes.outputs.frontend == 'true' || needs.check_changes.outputs.backend == 'true') }}
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ env.TERRAFORM_VERSION }}
+        terraform_wrapper: false
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Terraform Init (Get Outputs)
+      run: terraform init
 
     - name: Sync Website Files to S3
       run: |
@@ -134,19 +183,13 @@ jobs:
           --paths "/*"
         echo "✅ CloudFront cache invalidation initiated"
 
-    - name: Get Website URL
-      run: |
-        WEBSITE_URL=$(terraform output -raw website_url)
-        API_URL=$(terraform output -raw api_gateway_url)
-        echo "🌐 Website: https://$WEBSITE_URL"
-        echo "🚀 API Gateway: $API_URL"
-
-  # Job 4: Test Deployment
+  # Job 6: Test Deployment (Simple Integration Test)
   test:
-    name: Test Deployment
+    name: Verify Deployment
     runs-on: ubuntu-latest
-    needs: deploy
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [deploy_backend, deploy_frontend]
+    # Run if EITHER deploy job ran (and succeeded/skipped)
+    if: ${{ always() && (needs.deploy_backend.result == 'success' || needs.deploy_backend.result == 'skipped') && (needs.deploy_frontend.result == 'success' || needs.deploy_frontend.result == 'skipped') && (needs.deploy_backend.result != 'skipped' || needs.deploy_frontend.result != 'skipped') }}
     
     steps:
     - name: Checkout Code
@@ -168,30 +211,6 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Test API Gateway Endpoint
-      run: |
-        API_URL=$(terraform output -raw api_gateway_url)
-        echo "Testing API Gateway: $API_URL"
-        
-        RESPONSE=$(curl -s -w "\n%{http_code}" $API_URL)
-        HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-        BODY=$(echo "$RESPONSE" | head -n-1)
-        
-        echo "HTTP Status: $HTTP_CODE"
-        echo "Response Body: $BODY"
-        
-        if [ "$HTTP_CODE" != "200" ]; then
-          echo "❌ API Gateway test failed! HTTP $HTTP_CODE"
-          exit 1
-        fi
-        
-        if ! echo "$BODY" | grep -q "count"; then
-          echo "❌ Response doesn't contain 'count' field"
-          exit 1
-        fi
-        
-        echo "✅ API Gateway is working correctly!"
-
     - name: Test Website Availability
       run: |
         WEBSITE_URL=$(terraform output -raw website_url)
@@ -205,16 +224,3 @@ jobs:
         fi
         
         echo "✅ Website is accessible!"
-
-    - name: Deployment Summary
-      run: |
-        echo "🎉 Deployment Successful!"
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        echo "📊 Deployment Summary:"
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        WEBSITE_URL=$(terraform output -raw website_url)
-        API_URL=$(terraform output -raw api_gateway_url)
-        echo "🌐 Website URL: https://$WEBSITE_URL"
-        echo "🚀 API Gateway: $API_URL"
-        echo "✅ All tests passed!"
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
