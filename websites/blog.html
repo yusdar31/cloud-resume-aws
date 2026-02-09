@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Blog Andi Yusdar Al Imran - Artikel tentang Cloud Engineering, DevOps, Infrastructure, dan pengalaman di bidang IT.">
+    <meta name="keywords" content="Cloud Engineering Blog, DevOps, AWS, Infrastructure, System Engineering">
+    <meta name="author" content="Andi Yusdar Al Imran">
+
+    <title>Blog - Andi Yusdar Al Imran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: black;
+            color: #d1d5db;
+            scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .text-emerald {
+            color: #10b981;
+        }
+
+        .bg-emerald {
+            background-color: #10b981;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+
+        /* Blob Animation */
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        /* Blog Card Hover Effect */
+        .blog-card {
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body class="bg-black text-gray-200 font-sans selection:bg-emerald/30 selection:text-white overflow-x-hidden relative">
+
+    <!-- Animated Background Effects -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div
+            class="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] bg-emerald/10 rounded-full blur-[120px] animate-blob">
+        </div>
+        <div
+            class="absolute -bottom-[20%] -right-[10%] w-[70vw] h-[70vw] bg-teal-900/20 rounded-full blur-[120px] animate-blob animation-delay-2000">
+        </div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-emerald/5 rounded-full blur-[100px] animate-pulse-slow">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html"
+                class="text-xl font-bold text-white tracking-tight hover:text-emerald transition-colors">
+                Andi Yusdar <span class="text-emerald">Al Imran</span>
+            </a>
+
+            <div class="flex items-center gap-8 text-sm font-medium">
+                <a href="index.html#about" class="hover:text-emerald transition-colors">About</a>
+                <a href="index.html#journey" class="hover:text-emerald transition-colors">Journey</a>
+                <a href="index.html#skills" class="hover:text-emerald transition-colors">Skills</a>
+                <a href="index.html#projects" class="hover:text-emerald transition-colors">Projects</a>
+                <a href="blog.html" class="text-emerald">Blog</a>
+                <a href="index.html#contact" class="hover:text-emerald transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-[50vh] flex flex-col justify-center px-6 max-w-7xl mx-auto pt-32 pb-20 relative z-10">
+        <div class="text-center space-y-6">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald/10 border border-emerald/20 text-emerald text-sm font-medium">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                Blog & Articles
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
+                Tech <span class="text-emerald">Insights</span>
+            </h1>
+
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Berbagi pengalaman, pembelajaran, dan insight seputar Cloud Engineering, DevOps, dan Infrastructure
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="py-20 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Blog Post 1 -->
+            <article
+                class="blog-card p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all group">
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 text-xs text-emerald mb-4">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>Coming Soon</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4">
+                        Membangun Cloud Resume dengan AWS
+                    </h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Panduan lengkap membuat Cloud Resume Challenge menggunakan AWS services seperti S3, CloudFront,
+                        Lambda, dan DynamoDB dengan Infrastructure as Code (Terraform).
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-2">
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">AWS</span>
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">Terraform</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article
+                class="blog-card p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all group">
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 text-xs text-emerald mb-4">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>Coming Soon</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4">
+                        VMware ESXi Best Practices
+                    </h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Tips dan best practices dalam mengelola VMware ESXi di production environment, dari resource
+                        allocation hingga high availability configuration.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-2">
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">VMware</span>
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">Infrastructure</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article
+                class="blog-card p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all group">
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 text-xs text-emerald mb-4">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>Coming Soon</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4">
+                        CI/CD Pipeline dengan GitHub Actions
+                    </h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Implementasi CI/CD pipeline untuk automated deployment menggunakan GitHub Actions, dari testing
+                        hingga production deployment.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-2">
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">DevOps</span>
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">CI/CD</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 4 -->
+            <article
+                class="blog-card p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all group">
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 text-xs text-emerald mb-4">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>Coming Soon</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4">
+                        Network Security dengan Fortinet
+                    </h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Pengalaman mengimplementasikan network security menggunakan Fortinet FortiGate, dari basic
+                        configuration hingga advanced security policies.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-2">
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">Security</span>
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">Network</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 5 -->
+            <article
+                class="blog-card p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all group">
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 text-xs text-emerald mb-4">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>Coming Soon</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4">
+                        Citrix VDI Implementation Guide
+                    </h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Step-by-step guide implementasi Citrix Virtual Apps and Desktops untuk enterprise environment
+                        dengan high availability setup.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-2">
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">Citrix</span>
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">VDI</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 6 -->
+            <article
+                class="blog-card p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all group">
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 text-xs text-emerald mb-4">
+                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                        <span>Coming Soon</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4">
+                        Monitoring Infrastructure dengan Grafana
+                    </h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Setup monitoring dan observability untuk infrastructure menggunakan Grafana, Prometheus, dan
+                        CloudWatch untuk real-time insights.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-2">
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">Monitoring</span>
+                        <span
+                            class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">Grafana</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Coming Soon Notice -->
+        <div class="mt-20 text-center">
+            <div class="inline-flex flex-col items-center gap-4 p-10 rounded-[32px] glass border-emerald/20">
+                <i data-lucide="pen-tool" class="w-12 h-12 text-emerald"></i>
+                <h3 class="text-2xl font-bold text-white">Artikel Segera Hadir</h3>
+                <p class="text-gray-400 max-w-md">
+                    Saya sedang menulis artikel-artikel menarik seputar Cloud Engineering, DevOps, dan Infrastructure.
+                    Stay tuned!
+                </p>
+                <a href="index.html#contact"
+                    class="mt-4 flex items-center gap-2 px-6 py-3 bg-emerald hover:bg-emerald/80 text-black font-bold rounded-xl transition-all">
+                    <i data-lucide="bell" class="w-4 h-4"></i>
+                    Hubungi Saya
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5 relative z-10">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray-500 text-sm">
+                © 2026 Andi Yusdar Al Imran. Built with <span class="text-emerald">AWS</span> & <span
+                    class="text-emerald">Terraform</span>
+            </p>
+            <div class="mt-4 flex justify-center gap-6">
+                <a href="https://github.com/yusdar31" target="_blank"
+                    class="text-gray-400 hover:text-emerald transition-colors">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                </a>
+                <a href="https://linkedin.com/in/andiyusdaralimran" target="_blank"
+                    class="text-gray-400 hover:text-emerald transition-colors">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+                <a href="mailto:andiyusdaralimran@gmail.com" class="text-gray-400 hover:text-emerald transition-colors">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
