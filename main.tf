@@ -24,6 +24,9 @@ resource "aws_cloudfront_origin_access_control" "default" {
 
 # 4. CloudFront Distribution
 resource "aws_cloudfront_distribution" "s3_distribution" {
+  # Tunggu sampai certificate tervalidasi sebelum membuat CloudFront
+  depends_on = [aws_acm_certificate_validation.ssl_validation]
+
   origin {
     domain_name              = aws_s3_bucket.resume_bucket.bucket_regional_domain_name
     origin_id                = "S3Origin"
@@ -58,8 +61,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
   }
 
+  # Custom domain aliases
+  aliases = [var.domain_name, "www.${var.domain_name}"]
+
   viewer_certificate {
-    cloudfront_default_certificate = true # Kita pakai domain cloudfront dulu sebelum pakai domain custom
+    acm_certificate_arn      = aws_acm_certificate.ssl_certificate.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }
 

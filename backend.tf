@@ -1,8 +1,8 @@
 # --- 1. DynamoDB (Database) ---
 resource "aws_dynamodb_table" "visitor_table" {
-  name           = "CloudResume-VisitorCount"
-  billing_mode   = "PAY_PER_REQUEST" # Hemat biaya (Serverless), bayar kalau ada yg akses aja
-  hash_key       = "id"
+  name         = "CloudResume-VisitorCount"
+  billing_mode = "PAY_PER_REQUEST" # Hemat biaya (Serverless), bayar kalau ada yg akses aja
+  hash_key     = "id"
 
   attribute {
     name = "id"
@@ -26,8 +26,8 @@ resource "aws_iam_role" "lambda_role" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
       Principal = { Service = "lambda.amazonaws.com" }
     }]
   })
@@ -115,7 +115,7 @@ terraform {
 
   # INI BAGIAN PENTINGNYA
   backend "s3" {
-    bucket  = "yusdar-tf-state-12345"  # <--- GANTI DENGAN NAMA BUCKET STEP 1 TADI
+    bucket  = "yusdar-tf-state-12345" # <--- GANTI DENGAN NAMA BUCKET STEP 1 TADI
     key     = "cloud-resume/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true

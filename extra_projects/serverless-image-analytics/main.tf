@@ -4,9 +4,9 @@ provider "aws" {
 
 # 1. DynamoDB Table for Storing Metadata
 resource "aws_dynamodb_table" "image_metadata" {
-  name           = "ImageMetadata"
-  billing_mode   = "PAY_PER_REQUEST" # Free Tier Friendly
-  hash_key       = "image_id"
+  name         = "ImageMetadata"
+  billing_mode = "PAY_PER_REQUEST" # Free Tier Friendly
+  hash_key     = "image_id"
 
   attribute {
     name = "image_id"
@@ -27,8 +27,8 @@ resource "aws_iam_role" "lambda_role" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
       Principal = { Service = "lambda.amazonaws.com" }
     }]
   })
@@ -76,9 +76,9 @@ data "archive_file" "lambda_zip" {
 resource "aws_lambda_function" "image_processor" {
   filename         = data.archive_file.lambda_zip.output_path
   function_name    = "ImageAnalysisFunction"
-  role            = aws_iam_role.lambda_role.arn
-  handler         = "handler.lambda_handler"
-  runtime         = "python3.9"
+  role             = aws_iam_role.lambda_role.arn
+  handler          = "handler.lambda_handler"
+  runtime          = "python3.9"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 
   environment {

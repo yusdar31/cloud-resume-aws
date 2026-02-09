@@ -20,3 +20,13 @@ output "bucket_name" {
   description = "Name of the S3 bucket"
   value       = aws_s3_bucket.resume_bucket.id
 }
+
+output "custom_domain_url" {
+  description = "Custom domain URL untuk website"
+  value       = "https://${var.domain_name}"
+}
+
+output "cloudfront_domain_name" {
+  description = "CloudFront domain name - gunakan ini untuk CNAME di DNS"
+  value       = aws_cloudfront_distribution.s3_distribution.domain_name
+}
