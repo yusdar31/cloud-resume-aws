@@ -8,7 +8,7 @@
 
 > A serverless cloud resume website built with AWS services, featuring a dynamic visitor counter and fully automated infrastructure deployment using Terraform.
 
-**🔗 Live Demo:** [https://d150bm922en909.cloudfront.net](https://d150bm922en909.cloudfront.net)
+**🔗 Live Demo:** [https://www.andiyusdaralimran.my.id/](https://www.andiyusdaralimran.my.id/)
 
 ---
 
