@@ -159,13 +159,27 @@
                 page-break-inside: avoid;
             }
         }
+
+
+
+        /* Scroll Reveal Effect */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
 <body>
     <button class="print-button" onclick="window.print()">📄 Download as PDF</button>
 
-    <div class="container">
+    <div class="container reveal">
         <h1>ANDI YUSDAR AL IMRAN</h1>
         <div class="contact-info">
             System Engineer | Cloud Engineer | Network Infrastructure Specialist<br>
@@ -291,6 +305,28 @@
         </ul>
     </div>
 
+    </div>
+
+    <script>
+        // Scroll Reveal Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 
 </html>
