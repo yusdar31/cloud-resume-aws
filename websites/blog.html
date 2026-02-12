@@ -315,7 +315,9 @@
                         </div>
                     `;
                     document.body.appendChild(modal);
-                    lucide.createIcons();
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
                     document.body.style.overflow = 'hidden';
 
                     // Close on click outside
