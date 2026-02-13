@@ -78,6 +78,15 @@ This repository contains the source code and infrastructure for my **Cloud Resum
     ```bash
     aws s3 sync ./websites s3://your-bucket-name
     ```
+4.  **🐳 Running with Docker (Local Development)**
+
+    You can run the website locally using Docker Compose:
+
+    ```bash
+    docker-compose up -d --build
+    ```
+    
+    Access the site at **http://localhost:8080**.
 
 ## 📈 Architecture
 
