@@ -62,7 +62,7 @@ This repository contains the source code and infrastructure for my **Cloud Resum
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/yourusername/cloud-resume-challange.git
+    git clone https://github.com/yusdar31/cloud-resume-challange.git
     cd cloud-resume-challange
     ```
 
