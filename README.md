@@ -19,6 +19,7 @@ This repository contains the source code and infrastructure for my **Cloud Resum
   - **Glassmorphism** styling with Tailwind CSS.
   - Fully responsive and mobile-friendly.
 - **Static Blog System**: Integrated JSON-based blog for sharing technical insights.
+- **Containerized Development**: Local development environment supported via **Docker Compose**.
 
 ## 🛠️ Tech Stack
 
@@ -38,6 +39,7 @@ This repository contains the source code and infrastructure for my **Cloud Resum
 - **GitHub Actions** (CI/CD for frontend & terraform)
 - **AWS CloudFront** (CDN & HTTPS)
 - **AWS S3** (Static Website Hosting)
+- **Docker & Docker Compose** (Containerization)
 
 ## 📂 Project Structure
 
