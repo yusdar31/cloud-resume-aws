@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Details - Andi Yusdar Al Imran</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
@@ -13,8 +25,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: black;
-            color: #d1d5db;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .glass {
@@ -39,12 +50,20 @@
             margin-bottom: 1rem;
         }
 
-        .blog-content h2 {
-            font-size: 1.75rem;
+        .blog-content h2,
+        .blog-content h3 {
             font-weight: 600;
             color: white;
             margin-top: 2rem;
             margin-bottom: 1rem;
+        }
+
+        .blog-content h2 {
+            font-size: 1.75rem;
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
         }
 
         .blog-content p {
@@ -58,19 +77,25 @@
             margin-left: 1.5rem;
             margin-bottom: 1rem;
             line-height: 1.8;
-        }
-
-        .blog-content li {
-            margin-bottom: 0.5rem;
+            color: #d1d5db;
         }
 
         .blog-content pre {
-            background: rgba(255, 255, 255, 0.05);
+            background: #1f2937;
+            /* gray-800 */
             border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e5e7eb;
             border-radius: 8px;
             padding: 1rem;
             overflow-x: auto;
             margin: 1rem 0;
+        }
+
+        /* Light mode pre block usually stays dark for code */
+
+
+        .blog-content li {
+            margin-bottom: 0.5rem;
         }
 
         .blog-content code {
@@ -102,8 +127,10 @@
                 class="text-xl font-bold text-white tracking-tight hover:text-emerald transition-colors">
                 Andi Yusdar <span class="text-emerald">Al Imran</span>
             </a>
-            <div class="flex items-center gap-8 text-sm font-medium">
-                <a href="blog.html" class="flex items-center gap-2 hover:text-emerald transition-colors">
+
+            <div class="flex items-center gap-8">
+                <a href="blog.html"
+                    class="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-emerald transition-colors">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Blog
                 </a>
             </div>
@@ -140,7 +167,8 @@
                 </div>
 
                 <!-- Blog Body -->
-                <div id="blog-content" class="blog-content glass rounded-[32px] p-8 md:p-12 border-white/5">
+                <div id="blog-content"
+                    class="blog-content glass rounded-[32px] p-8 md:p-12 border-white/5 shadow-none bg-white/5">
                     <!-- Content injected here -->
                 </div>
             </div>
@@ -148,7 +176,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-12 px-6 border-t border-white/5">
+    <footer class="py-12 px-6 border-t border-white/5 relative z-10">
         <div class="max-w-7xl mx-auto text-center">
             <p class="text-gray-500 text-sm">© 2026 Andi Yusdar Al Imran</p>
         </div>
@@ -219,6 +247,14 @@
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            lucide.createIcons();
+            // ...
+            // Re-run lucide after content injection
+        });
+        // ...
     </script>
 </body>
 

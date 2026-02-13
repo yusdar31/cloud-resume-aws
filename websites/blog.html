@@ -15,15 +15,25 @@
 
     <title>Blog - Andi Yusdar Al Imran</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: black;
-            color: #d1d5db;
-            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .glass {
@@ -115,20 +125,20 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <nav
+        class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="index.html"
                 class="text-xl font-bold text-white tracking-tight hover:text-emerald transition-colors">
                 Andi Yusdar <span class="text-emerald">Al Imran</span>
             </a>
 
-            <div class="flex items-center gap-8 text-sm font-medium">
-                <a href="index.html#about" class="hover:text-emerald transition-colors">About</a>
-                <a href="index.html#journey" class="hover:text-emerald transition-colors">Journey</a>
-                <a href="index.html#skills" class="hover:text-emerald transition-colors">Skills</a>
-                <a href="index.html#projects" class="hover:text-emerald transition-colors">Projects</a>
-                <a href="blog.html" class="text-emerald">Blog</a>
-                <a href="index.html#contact" class="hover:text-emerald transition-colors">Contact</a>
+            <div class="flex items-center gap-8">
+                <!-- Back to Home -->
+                <a href="index.html"
+                    class="hidden md:flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-emerald transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+                </a>
             </div>
         </div>
     </nav>
@@ -167,8 +177,8 @@
         <div class="mt-20 text-center">
             <div class="inline-flex flex-col items-center gap-4 p-10 rounded-[32px] glass border-emerald/20">
                 <i data-lucide="pen-tool" class="w-12 h-12 text-emerald"></i>
-                <h3 class="text-2xl font-bold text-white">Artikel Segera Hadir</h3>
-                <p class="text-gray-400 max-w-md">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Artikel Segera Hadir</h3>
+                <p class="text-gray-600 dark:text-gray-400 max-w-md">
                     Saya sedang menulis artikel-artikel menarik seputar Cloud Engineering, DevOps, dan Infrastructure.
                     Stay tuned!
                 </p>
@@ -258,7 +268,7 @@
 
             return `
                 <a href="blog-details.html?id=${post.id}" class="block group">
-                    <article class="blog-card h-full p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all">
+                    <article class="blog-card h-full p-8 rounded-[32px] glass border-gray-200 dark:border-white/5 hover:border-emerald/30 transition-all bg-white/50 dark:bg-white/5">
                         <div class="mb-6">
                             <div class="flex items-center gap-2 text-xs text-emerald mb-4">
                                 <i data-lucide="calendar" class="w-3 h-3"></i>
@@ -267,10 +277,10 @@
                                 <i data-lucide="clock" class="w-3 h-3"></i>
                                 <span>${post.readTime}</span>
                             </div>
-                            <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4 line-clamp-2">
+                            <h2 class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-emerald transition-colors mb-4 line-clamp-2">
                                 ${post.title}
                             </h2>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
                                 ${post.description}
                             </p>
                         </div>
@@ -296,6 +306,7 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             fetchAndRenderBlogs();
+            lucide.createIcons(); // Ensure icons are created after content is loaded
         });
     </script>
 </body>

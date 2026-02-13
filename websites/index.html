@@ -32,6 +32,18 @@
 
     <title>Andi Yusdar Al Imran - Cloud Resume Challenge</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -39,9 +51,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: black;
-            color: #d1d5db;
-            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .glass {
@@ -194,26 +204,30 @@
         </div>
     </div>
 
+    <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="text-xl font-bold text-white tracking-tight">
+            <a href="#about" class="text-xl font-bold text-white tracking-tight hover:text-emerald transition-colors">
                 Andi Yusdar <span class="text-emerald">Al Imran</span>
-            </div>
+            </a>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#about" class="hover:text-emerald transition-colors">About</a>
-                <a href="#journey" class="hover:text-emerald transition-colors">Journey</a>
-                <a href="#skills" class="hover:text-emerald transition-colors">Skills</a>
-                <a href="#projects" class="hover:text-emerald transition-colors">Projects</a>
-                <a href="blog.html" class="hover:text-emerald transition-colors">Blog</a>
-                <a href="#contact" class="hover:text-emerald transition-colors">Contact</a>
-            </div>
+            <div class="flex items-center gap-8">
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                    <a href="#journey" class="hover:text-emerald transition-colors">Journey</a>
+                    <a href="#education" class="hover:text-emerald transition-colors">Education</a>
+                    <a href="#skills" class="hover:text-emerald transition-colors">Skills</a>
+                    <a href="#projects" class="hover:text-emerald transition-colors">Projects</a>
+                    <a href="#blog-preview" class="hover:text-emerald transition-colors">Blog</a>
+                    <a href="#contact"
+                        class="px-4 py-2 bg-emerald hover:bg-emerald/90 text-white rounded-lg transition-all">Contact</a>
+                </div>
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald transition-colors">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -228,11 +242,11 @@
         </button>
 
         <div class="flex flex-col gap-6 mt-16 text-lg font-medium">
-            <a href="#about" class="mobile-menu-link hover:text-emerald transition-colors">About</a>
             <a href="#journey" class="mobile-menu-link hover:text-emerald transition-colors">Journey</a>
+            <a href="#education" class="mobile-menu-link hover:text-emerald transition-colors">Education</a>
             <a href="#skills" class="mobile-menu-link hover:text-emerald transition-colors">Skills</a>
             <a href="#projects" class="mobile-menu-link hover:text-emerald transition-colors">Projects</a>
-            <a href="blog.html" class="mobile-menu-link hover:text-emerald transition-colors">Blog</a>
+            <a href="#blog-preview" class="mobile-menu-link hover:text-emerald transition-colors">Blog</a>
             <a href="#contact" class="mobile-menu-link hover:text-emerald transition-colors">Contact</a>
         </div>
     </div>
@@ -268,7 +282,8 @@
                 </div>
 
                 <p class="text-lg text-gray-400 max-w-xl leading-relaxed">
-                    Seorang <span class="text-white font-medium">System Engineer</span> yang berpengalaman dalam
+                    Seorang <span class="text-white font-medium">System Engineer</span> yang
+                    berpengalaman dalam
                     mengelola infrastruktur IT skala besar, virtualisasi, dan jaringan multi-vendor. Berfokus pada <span
                         class="text-emerald">stabilitas sistem</span> dan efisiensi teknologi.
                 </p>
@@ -279,7 +294,7 @@
                         <i data-lucide="mail" class="w-5 h-5"></i> Contact Me
                     </a>
                     <a href="#journey"
-                        class="flex items-center gap-2 px-8 py-4 border border-white/20 hover:border-emerald/50 hover:text-emerald text-white font-bold rounded-xl transition-all">
+                        class="flex items-center gap-2 px-8 py-4 border border-gray-200 dark:border-white/20 hover:border-emerald/50 hover:text-emerald text-white font-bold rounded-xl transition-all">
                         View Journey <i data-lucide="chevron-right" class="w-5 h-5"></i>
                     </a>
                 </div>
@@ -328,14 +343,16 @@
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/mastersystem.png" alt="Mastersystem Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
-                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Des 2024 - Present</div>
+                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Des 2024 -
+                        Present</div>
                     <div class="text-xs">PT Mastersystem Infotama</div>
                     <div class="inline-block px-2 py-1 bg-emerald/10 text-[10px] rounded border border-emerald/20 mt-2">
                         Full-time</div>
                     <div class="text-[10px] text-gray-400 mt-1">Jakarta Pusat</div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">System Engineer
+                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">
+                        System Engineer
                     </h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-start gap-3">
@@ -374,13 +391,15 @@
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/mvt.png" alt="MVT Makassar Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
-                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Jan 2025 - Des 2025</div>
+                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Jan 2025 -
+                        Des 2025</div>
                     <div class="text-xs">Mitra Visindo Teknologi</div>
                     <div class="inline-block px-2 py-1 bg-white/10 text-[10px] rounded border border-white/20 mt-2">
                         Contract</div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">IT Network
+                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">
+                        IT Network
                         Infrastructure</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-start gap-3">
@@ -419,13 +438,15 @@
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/sier.png" alt="SIER Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
-                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Sep 2024 - Des 2024</div>
+                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Sep 2024 -
+                        Des 2024</div>
                     <div class="text-xs">PT Surabaya Industrial Estate Rungkut (SIER)</div>
                     <div class="inline-block px-2 py-1 bg-white/10 text-[10px] rounded border border-white/20 mt-2">
                         Internship</div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">IT Support
+                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">
+                        IT Support
                         Technician</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-start gap-3">
@@ -453,12 +474,14 @@
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/infinitelearning.png" alt="Infinite Learning Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
-                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Feb 2024 - Jun 2024</div>
+                    <div class="text-sm uppercase tracking-widest opacity-60 text-white">Feb 2024 -
+                        Jun 2024</div>
                     <div class="text-xs">Infinite Learning Indonesia</div>
                     <div class="text-[10px] text-gray-400 mt-1">Remote</div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">Web Developer &
+                    <h3 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors">
+                        Web Developer &
                         UI/UX Designer</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-start gap-3">
@@ -496,7 +519,8 @@
                         <p class="text-sm text-emerald">D4 Teknik Komputer dan Jaringan</p>
                     </div>
                 </div>
-                <p class="text-gray-400 text-sm mb-4">Mendalami administrasi sistem, keamanan jaringan, dan
+                <p class="text-gray-400 text-sm mb-4">Mendalami administrasi sistem, keamanan
+                    jaringan, dan
                     infrastruktur IT.</p>
                 <div class="flex items-center gap-2 text-xs text-gray-500">
                     <i data-lucide="calendar" class="w-3 h-3"></i> Sep 2021 - Sep 2025
@@ -512,7 +536,8 @@
                         <p class="text-sm text-emerald">Teknik Komputer dan Jaringan</p>
                     </div>
                 </div>
-                <p class="text-gray-400 text-sm mb-4">Mendalami dasar-dasar jaringan komputer, administrasi sistem, dan
+                <p class="text-gray-400 text-sm mb-4">Mendalami dasar-dasar jaringan komputer,
+                    administrasi sistem, dan
                     keamanan jaringan.</p>
                 <div class="flex items-center gap-2 text-xs text-gray-500">
                     <i data-lucide="calendar" class="w-3 h-3"></i> 2016 - 2020
@@ -538,15 +563,16 @@
                 </div>
                 <div class="space-y-6">
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>AWS (EC2, S3, Lambda,
+                        <div class="flex justify-between text-xs text-white mb-2"><span>AWS (EC2, S3,
+                                Lambda,
                                 VPC)</span><span class="text-emerald">85%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 85%"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>Terraform / IaC</span><span
-                                class="text-emerald">80%</span></div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Terraform /
+                                IaC</span><span class="text-emerald">80%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 80%"></div>
                         </div>
@@ -559,8 +585,8 @@
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>Docker & Containers</span><span
-                                class="text-emerald">85%</span></div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Docker &
+                                Containers</span><span class="text-emerald">85%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 85%"></div>
                         </div>
@@ -586,21 +612,23 @@
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>Citrix Virtual Apps &
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Citrix
+                                Virtual Apps &
                                 Desktops</span><span class="text-emerald">85%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 85%"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>Proxmox VE</span><span
-                                class="text-emerald">85%</span></div>
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Proxmox
+                                VE</span><span class="text-emerald">85%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 85%"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>Server Hardware
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Server
+                                Hardware
                                 (Cisco/HPE/Dell)</span><span class="text-emerald">80%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 80%"></div>
@@ -620,14 +648,16 @@
                 </div>
                 <div class="space-y-6">
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>Network Engineering
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Network
+                                Engineering
                                 (Cisco/Ruckus/Mikrotik)</span><span class="text-emerald">90%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 90%"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs text-white mb-2"><span>Network Security (Fortinet/Palo
+                        <div class="flex justify-between text-xs text-white mb-2"><span>Network
+                                Security (Fortinet/Palo
                                 Alto)</span><span class="text-emerald">80%</span></div>
                         <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald" style="width: 80%"></div>
@@ -654,7 +684,7 @@
 
     </section>
 
-    <section id="certifications" class="py-32 px-6 max-w-7xl mx-auto bg-black">
+    <section id="certifications" class="py-32 px-6 max-w-7xl mx-auto bg-gray-50 dark:bg-black">
         <div class="text-center mb-20">
             <h2 class="text-4xl font-bold text-white">Certifications & <span class="text-emerald">Licenses</span></h2>
             <p class="mt-4 text-gray-500">Profesional certifications dan lisensi keahlian</p>
@@ -771,7 +801,8 @@
                         <i data-lucide="router" class="w-6 h-6 text-emerald"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-white text-sm">Omada Certified Network Admin (OCNA)</h3>
+                        <h3 class="font-bold text-white text-sm">Omada Certified Network Admin (OCNA)
+                        </h3>
                         <p class="text-[10px] text-gray-400">TP-Link | Wireless & Routing Switching</p>
                     </div>
                 </div>
@@ -787,7 +818,7 @@
         </div>
     </section>
 
-    <section id="organization" class="py-20 px-6 max-w-7xl mx-auto bg-black">
+    <section id="organization" class="py-20 px-6 max-w-7xl mx-auto bg-gray-50 dark:bg-black">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-white">Organizational <span class="text-emerald">Experience</span></h2>
         </div>
@@ -815,7 +846,8 @@
                 <div class="flex flex-col h-full">
                     <div class="mb-6">
                         <img src="assets/logos/cnc.png" alt="CNC Logo" class="w-20 h-20 object-contain mb-4 mx-auto">
-                        <h3 class="text-xl font-bold text-white mb-1">Koordinator Bidang Networking</h3>
+                        <h3 class="text-xl font-bold text-white mb-1">Koordinator Bidang Networking
+                        </h3>
                         <p class="text-sm text-emerald">Computer Networking Community (CNC)</p>
                     </div>
                     <div class="mt-auto">
@@ -858,7 +890,8 @@
                     <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
                         <i data-lucide="cloud" class="w-6 h-6 text-emerald"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">Cloud Resume
+                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">
+                        Cloud Resume
                         Challenge</h3>
                 </div>
                 <p class="text-sm text-gray-400 mb-6 leading-relaxed">
@@ -906,7 +939,8 @@
                     <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
                         <i data-lucide="layers" class="w-6 h-6 text-emerald"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">AWS 3-Tier
+                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">
+                        AWS 3-Tier
                         Architecture</h3>
                 </div>
                 <p class="text-sm text-gray-400 mb-6 leading-relaxed">
@@ -951,7 +985,8 @@
                     <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
                         <i data-lucide="shield-alert" class="w-6 h-6 text-emerald"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">Hybrid Cloud
+                    <h3 class="text-xl font-bold text-white group-hover:text-emerald transition-colors">
+                        Hybrid Cloud
                         Security</h3>
                 </div>
                 <p class="text-sm text-gray-400 mb-6 leading-relaxed">
@@ -994,9 +1029,10 @@
     </section>
 
     <!-- Blog Preview Section -->
-    <section id="blog-preview" class="py-32 px-6 max-w-7xl mx-auto bg-black">
+    <section id="blog-preview" class="py-32 px-6 max-w-7xl mx-auto bg-gray-50 dark:bg-black">
         <div class="text-center mb-20">
-            <h2 class="text-4xl font-bold text-white">Latest <span class="text-emerald">Blog Posts</span></h2>
+            <h2 class="text-4xl font-bold text-white">Latest <span class="text-emerald">Blog
+                    Posts</span></h2>
             <p class="mt-4 text-gray-500">Insights dan pengalaman seputar Cloud Engineering & DevOps</p>
         </div>
 
@@ -1087,7 +1123,8 @@
     <!-- Contact Me Section -->
     <section id="contact" class="py-32 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-white">Get In <span class="text-emerald">Touch</span></h2>
+            <h2 class="text-4xl font-bold text-white">Get In <span class="text-emerald">Touch</span>
+            </h2>
             <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
                 Interested in collaboration or have a project in mind? Feel free to reach out!
             </p>
@@ -1101,7 +1138,8 @@
                     class="inline-flex p-4 rounded-xl bg-emerald/10 border border-emerald/20 text-emerald mb-4 group-hover:bg-emerald/20 transition-colors">
                     <i class="fab fa-linkedin text-3xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald transition-colors">LinkedIn</h3>
+                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald transition-colors">
+                    LinkedIn</h3>
                 <p class="text-sm text-gray-400">Connect professionally</p>
             </a>
 
@@ -1112,7 +1150,8 @@
                     class="inline-flex p-4 rounded-xl bg-emerald/10 border border-emerald/20 text-emerald mb-4 group-hover:bg-emerald/20 transition-colors">
                     <i class="fab fa-github text-3xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald transition-colors">GitHub</h3>
+                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald transition-colors">
+                    GitHub</h3>
                 <p class="text-sm text-gray-400">Check out my projects</p>
             </a>
 
@@ -1123,7 +1162,8 @@
                     class="inline-flex p-4 rounded-xl bg-emerald/10 border border-emerald/20 text-emerald mb-4 group-hover:bg-emerald/20 transition-colors">
                     <i class="fas fa-envelope text-3xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald transition-colors">Email</h3>
+                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald transition-colors">
+                    Email</h3>
                 <p class="text-sm text-gray-400">andiyusdaralimran@gmail.com</p>
             </a>
         </div>
@@ -1286,8 +1326,16 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Initialize Lucide Icons
-        lucide.createIcons();
+        // Initialize Lucide
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            // Initial icon update handled by theme.js but we need to ensure icons are created first?
+            // No, theme.js runs and toggles hidden classes. Lucide replaces <i> with <svg>.
+            // We need to re-run createIcons maybe? Or standard usage is fine.
+            // Actually theme.js modifies classes of the ELEMENT. Lucide replaces the element with SVG.
+            // If Lucide replaces the element, our ID might be lost if we put ID on <i>?
+            // Lucide keeps attributes usually.
+        });
     </script>
 </body>
 
