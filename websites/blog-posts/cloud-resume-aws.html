@@ -1,0 +1,163 @@
+<div class="blog-content">
+    <h1>Membangun Cloud Resume dengan AWS</h1>
+
+    <div class="meta-info">
+        <span class="date">15 Februari 2026</span>
+        <span class="read-time">8 min read</span>
+    </div>
+
+    <img src="../assets/cloud-resume-banner.jpg" alt="Cloud Resume Challenge" class="featured-image" />
+
+    <h2>Apa itu Cloud Resume Challenge?</h2>
+    <p>
+        Cloud Resume Challenge adalah project hands-on yang dirancang untuk membantu cloud engineers pemula
+        membangun portfolio yang impressive. Project ini menggabungkan berbagai AWS services dan best practices
+        dalam cloud engineering.
+    </p>
+
+    <h2>Arsitektur yang Digunakan</h2>
+    <p>Dalam project ini, saya menggunakan beberapa AWS services:</p>
+    <ul>
+        <li><strong>Amazon S3</strong> - Hosting static website</li>
+        <li><strong>CloudFront</strong> - CDN untuk distribusi global</li>
+        <li><strong>Route 53</strong> - DNS management</li>
+        <li><strong>Lambda</strong> - Serverless function untuk visitor counter</li>
+        <li><strong>DynamoDB</strong> - Database untuk menyimpan visitor count</li>
+        <li><strong>API Gateway</strong> - REST API endpoint</li>
+        <li><strong>Certificate Manager</strong> - SSL/TLS certificate</li>
+    </ul>
+
+    <h2>Infrastructure as Code dengan Terraform</h2>
+    <p>
+        Semua infrastructure di-provision menggunakan Terraform. Ini memastikan infrastructure bisa
+        di-reproduce dengan mudah dan mengikuti best practices IaC.
+    </p>
+
+    <pre><code>resource "aws_s3_bucket" "website" {
+  bucket = "my-cloud-resume-bucket"
+  
+  tags = {
+    Name        = "Cloud Resume Website"
+    Environment = "Production"
+  }
+}</code></pre>
+
+    <h2>CI/CD Pipeline</h2>
+    <p>
+        Saya menggunakan GitHub Actions untuk automated deployment. Setiap kali ada push ke main branch,
+        pipeline akan otomatis:
+    </p>
+    <ol>
+        <li>Run tests</li>
+        <li>Build static files</li>
+        <li>Deploy ke S3</li>
+        <li>Invalidate CloudFront cache</li>
+    </ol>
+
+    <h2>Lessons Learned</h2>
+    <p>
+        Project ini mengajarkan saya banyak hal tentang AWS services, infrastructure automation,
+        dan modern DevOps practices. Sangat recommended untuk siapa saja yang ingin memulai karir
+        di cloud engineering!
+    </p>
+
+    <div class="call-to-action">
+        <p><strong>Tertarik mencoba?</strong> Check out repository saya di GitHub untuk source code lengkap!</p>
+        <a href="https://github.com/yusdar31/cloud-resume-aws" target="_blank" class="cta-button">View on GitHub</a>
+    </div>
+</div>
+
+<style>
+    .blog-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        color: #d1d5db;
+    }
+
+    .blog-content h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .meta-info {
+        display: flex;
+        gap: 1rem;
+        color: #10b981;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+    }
+
+    .featured-image {
+        width: 100%;
+        border-radius: 16px;
+        margin: 2rem 0;
+    }
+
+    .blog-content h2 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: white;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .blog-content p {
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        color: #d1d5db;
+    }
+
+    .blog-content ul,
+    .blog-content ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+    }
+
+    .blog-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .blog-content pre {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+
+    .blog-content code {
+        color: #10b981;
+        font-family: 'Courier New', monospace;
+    }
+
+    .call-to-action {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+        text-align: center;
+    }
+
+    .cta-button {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.75rem 2rem;
+        background: #10b981;
+        color: black;
+        font-weight: bold;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+        background: #059669;
+        transform: translateY(-2px);
+    }
+</style>

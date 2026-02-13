@@ -1,0 +1,11 @@
+* cc74e50 Implement new static JSON blog system
+* b98acf8 Fix: Safeguard Lucide usage in blog.html
+* ae13005 Fix: Safeguard index.html script execution and standardize resume.html
+* 9f7f0b8 Fix: Resolve merge conflicts in blog.html
+* d2e15b2 Fix: Improve scroll reveal performance by applying to elements instead of sections
+* 89e0d84 Feat: Implement scroll reveal effects on index.html, blog.html, and resume.html
+* 082e28e Update README.md
+| * ed26726 Implement static json blog system
+|/  
+* 384bb5d Add github link for aws 3 tier project and hybrid cloud security project
+* 468a5d4 Add blog page and navigation

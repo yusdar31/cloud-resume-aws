@@ -1,0 +1,143 @@
+<div class="blog-content">
+    <h1>CI/CD Pipeline dengan GitHub Actions</h1>
+
+    <div class="meta-info">
+        <span class="date">25 Februari 2026</span>
+        <span class="read-time">7 min read</span>
+    </div>
+
+    <h2>Mengapa CI/CD Penting?</h2>
+    <p>
+        Continuous Integration dan Continuous Deployment (CI/CD) adalah practice yang essential
+        dalam modern software development. Dengan CI/CD, kita bisa automate testing dan deployment,
+        mengurangi human error, dan mempercepat delivery cycle.
+    </p>
+
+    <h2>GitHub Actions Overview</h2>
+    <p>
+        GitHub Actions adalah platform CI/CD yang terintegrasi langsung dengan GitHub repository.
+        Keuntungannya:
+    </p>
+    <ul>
+        <li>Free untuk public repositories</li>
+        <li>Easy configuration dengan YAML</li>
+        <li>Banyak pre-built actions di marketplace</li>
+        <li>Terintegrasi dengan GitHub ecosystem</li>
+    </ul>
+
+    <h2>Sample Workflow</h2>
+    <p>Berikut contoh workflow untuk deploy static website ke S3:</p>
+
+    <pre><code>name: Deploy to S3
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./websites s3://my-bucket --delete
+          
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
+</code></pre>
+
+    <h2>Best Practices</h2>
+    <ol>
+        <li><strong>Use Secrets</strong> - Jangan hardcode credentials di workflow</li>
+        <li><strong>Cache Dependencies</strong> - Speed up build dengan caching</li>
+        <li><strong>Matrix Builds</strong> - Test di multiple environments</li>
+        <li><strong>Branch Protection</strong> - Require CI pass sebelum merge</li>
+    </ol>
+
+    <div class="call-to-action">
+        <p><strong>Ready to automate?</strong> Start implementing CI/CD di project Anda!</p>
+    </div>
+</div>
+
+<style>
+    .blog-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        color: #d1d5db;
+    }
+
+    .blog-content h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .meta-info {
+        display: flex;
+        gap: 1rem;
+        color: #10b981;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+    }
+
+    .blog-content h2 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: white;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .blog-content p {
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        color: #d1d5db;
+    }
+
+    .blog-content ul,
+    .blog-content ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+    }
+
+    .blog-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .blog-content pre {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+
+    .blog-content code {
+        color: #10b981;
+        font-family: 'Courier New', monospace;
+        font-size: 0.875rem;
+    }
+
+    .call-to-action {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+        text-align: center;
+    }
+</style>

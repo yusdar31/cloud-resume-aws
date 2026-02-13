@@ -1,0 +1,50 @@
+<div class="blog-content">
+    <h1>Monitoring Infrastructure dengan Grafana</h1>
+
+    <div class="meta-info">
+        <span class="date">10 Maret 2026</span>
+        <span class="read-time">8 min read</span>
+    </div>
+
+    <h2>Introduction</h2>
+    <p>
+        Dalam era modern infrastructure, observability adalah kunci. Artikel ini akan membahas bagaimana membangun
+        sistem monitoring yang robust menggunakan Grafana, Prometheus, dan AWS CloudWatch.
+    </p>
+
+    <h2>Architecture Overview</h2>
+    <p>
+        Kami menggunakan pendekatan multi-layer monitoring:
+    </p>
+    <ul>
+        <li><strong>Infrastructure Layer:</strong> CPU, Memory, Disk I/O (Node Exporter)</li>
+        <li><strong>Application Layer:</strong> Request counts, Latency, Error rates</li>
+        <li><strong>Business Layer:</strong> Transaction volume, Active users</li>
+    </ul>
+
+    <h2>Setting Up Prometheus</h2>
+    <p>
+        Langkah pertama adalah mengkonfigurasi Prometheus untuk scrape metrics dari target nodes. Berikut adalah contoh
+        konfigurasi `prometheus.yml`:
+    </p>
+
+    <pre><code>global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['localhost:9100']</code></pre>
+
+    <h2>Visualizing in Grafana</h2>
+    <p>
+        Setelah data terkumpul di Prometheus, kita dapat menghubungkannya ke Grafana sebagai Data Source. Dashboard yang
+        efektif harus bisa menceritakan kondisi sistem dalam sekejap "glance".
+    </p>
+
+    <h2>Alerting Strategy</h2>
+    <p>
+        Jangan hanya monitor, tapi juga beri notifikasi. Gunakan Alertmanager untuk mengirim notifikasi ke Slack atau
+        PagerDuty ketika metric melewati threshold kritis.
+    </p>
+</div>

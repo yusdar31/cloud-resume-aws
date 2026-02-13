@@ -49,9 +49,9 @@ resource "aws_iam_role_policy" "lambda_policy" {
       },
       {
         # Izin akses DynamoDB
-        Action   = ["dynamodb:UpdateItem", "dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Scan", "dynamodb:Query"],
+        Action   = ["dynamodb:UpdateItem", "dynamodb:GetItem"],
         Effect   = "Allow",
-        Resource = [aws_dynamodb_table.visitor_table.arn, aws_dynamodb_table.blog_table.arn]
+        Resource = aws_dynamodb_table.visitor_table.arn
       }
     ]
   })
@@ -108,49 +108,6 @@ resource "aws_cloudwatch_log_group" "lambda_log_group" {
   # Namanya WAJIB persis seperti ini: /aws/lambda/<NamaFungsi>
   name              = "/aws/lambda/${aws_lambda_function.visitor_counter.function_name}"
   retention_in_days = 7 # Simpan log cuma seminggu
-}
-
-# --- 6. Blog Feature Resources ---
-
-# DynamoDB for Blog Posts
-resource "aws_dynamodb_table" "blog_table" {
-  name         = "CloudResume-BlogPosts"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "id"
-
-  attribute {
-    name = "id"
-    type = "S"
-  }
-}
-
-# Archive Blog Lambda
-data "archive_file" "blog_lambda_zip" {
-  type        = "zip"
-  source_file = "${path.module}/lambda/blog.py"
-  output_path = "${path.module}/lambda/blog.zip"
-}
-
-# Blog Lambda Function
-resource "aws_lambda_function" "blog_service" {
-  filename         = data.archive_file.blog_lambda_zip.output_path
-  function_name    = "blog_service_func"
-  role             = aws_iam_role.lambda_role.arn
-  handler          = "blog.handler"
-  runtime          = "python3.9"
-  source_code_hash = data.archive_file.blog_lambda_zip.output_base64sha256
-
-  environment {
-    variables = {
-      TABLE_NAME = aws_dynamodb_table.blog_table.name
-    }
-  }
-}
-
-# CloudWatch Log Group for Blog Lambda
-resource "aws_cloudwatch_log_group" "blog_lambda_log_group" {
-  name              = "/aws/lambda/${aws_lambda_function.blog_service.function_name}"
-  retention_in_days = 7
 }
 
 terraform {

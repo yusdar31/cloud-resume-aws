@@ -1,0 +1,109 @@
+<div class="blog-content">
+    <h1>VMware ESXi Best Practices</h1>
+
+    <div class="meta-info">
+        <span class="date">20 Februari 2026</span>
+        <span class="read-time">6 min read</span>
+    </div>
+
+    <h2>Introduction</h2>
+    <p>
+        VMware ESXi adalah hypervisor enterprise-grade yang powerful untuk virtualization.
+        Dalam artikel ini, saya akan share best practices yang saya pelajari dari pengalaman
+        mengelola ESXi di production environment.
+    </p>
+
+    <h2>Resource Allocation</h2>
+    <p>Beberapa tips penting dalam resource allocation:</p>
+    <ul>
+        <li><strong>CPU Over-commitment</strong> - Jangan over-commit CPU lebih dari 2:1 ratio</li>
+        <li><strong>Memory Reservation</strong> - Set memory reservation untuk critical VMs</li>
+        <li><strong>Storage Planning</strong> - Gunakan thin provisioning dengan monitoring yang ketat</li>
+    </ul>
+
+    <h2>High Availability Configuration</h2>
+    <p>
+        HA (High Availability) adalah fitur critical untuk production environment.
+        Pastikan untuk configure:
+    </p>
+    <ol>
+        <li>Admission Control Policy yang sesuai</li>
+        <li>VM Restart Priority untuk critical workloads</li>
+        <li>Host Isolation Response</li>
+        <li>Datastore Heartbeating</li>
+    </ol>
+
+    <h2>Networking Best Practices</h2>
+    <p>
+        Untuk networking, saya recommend menggunakan distributed virtual switches (dvSwitch)
+        untuk management yang lebih mudah dan konsisten across hosts.
+    </p>
+
+    <h2>Backup Strategy</h2>
+    <p>
+        Jangan lupa implement backup strategy yang solid. Saya menggunakan Veeam Backup & Replication
+        dengan schedule yang teratur dan testing restore secara berkala.
+    </p>
+
+    <div class="call-to-action">
+        <p><strong>Need help?</strong> Feel free to reach out untuk diskusi lebih lanjut!</p>
+    </div>
+</div>
+
+<style>
+    .blog-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        color: #d1d5db;
+    }
+
+    .blog-content h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .meta-info {
+        display: flex;
+        gap: 1rem;
+        color: #10b981;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+    }
+
+    .blog-content h2 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: white;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .blog-content p {
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        color: #d1d5db;
+    }
+
+    .blog-content ul,
+    .blog-content ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+    }
+
+    .blog-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .call-to-action {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+        text-align: center;
+    }
+</style>

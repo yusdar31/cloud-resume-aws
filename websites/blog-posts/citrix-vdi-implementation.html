@@ -1,0 +1,34 @@
+<div class="blog-content">
+    <h1>Citrix VDI Implementation Guide</h1>
+
+    <div class="meta-info">
+        <span class="date">5 Maret 2026</span>
+        <span class="read-time">10 min read</span>
+    </div>
+
+    <h2>Introduction</h2>
+    <p>
+        Virtual Desktop Infrastructure (VDI) memungkinkan karyawan bekerja dari mana saja dengan aman. Studi kasus ini
+        membahas implementasi Citrix Virtual Apps and Desktops untuk 500+ user.
+    </p>
+
+    <h2>Infrastructure Components</h2>
+    <ul>
+        <li><strong>Citrix Gateway:</strong> Secure remote access point.</li>
+        <li><strong>Delivery Controller:</strong> Broker koneksi user ke resource.</li>
+        <li><strong>StoreFront:</strong> Enterprise app store untuk user.</li>
+        <li><strong>VDA (Virtual Delivery Agent):</strong> Installed di setiap VM.</li>
+    </ul>
+
+    <h2>High Availability Setup</h2>
+    <p>
+        Untuk memastikan uptime 99.9%, kami men-deploy komponen kritis secara redundant di dua availability zone yang
+        berbeda. SQL Server menggunakan Always On Availability Groups.
+    </p>
+
+    <h2>User Experience Optimization</h2>
+    <p>
+        Tantangan terbesar VDI adalah latency. Kami menggunakan Citrix HDX technology dan mengoptimalkan policy
+        bandwidth untuk memberikan pengalaman "local-like" meskipun user mengakses via koneksi mobile.
+    </p>
+</div>

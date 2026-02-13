@@ -1,0 +1,82 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "title": "Membangun Cloud Resume dengan AWS",
+            "date": "2026-02-15",
+            "description": "Panduan lengkap membuat Cloud Resume Challenge menggunakan AWS services seperti S3, CloudFront, Lambda, dan DynamoDB dengan Infrastructure as Code (Terraform).",
+            "tags": [
+                "AWS",
+                "Terraform"
+            ],
+            "contentPath": "blog-posts/cloud-resume-aws.html",
+            "readTime": "8 min read",
+            "status": "published"
+        },
+        {
+            "id": 2,
+            "title": "VMware ESXi Best Practices",
+            "date": "2026-02-20",
+            "description": "Tips dan best practices dalam mengelola VMware ESXi di production environment, dari resource allocation hingga high availability configuration.",
+            "tags": [
+                "VMware",
+                "Infrastructure"
+            ],
+            "contentPath": "blog-posts/vmware-esxi-best-practices.html",
+            "readTime": "6 min read",
+            "status": "published"
+        },
+        {
+            "id": 3,
+            "title": "CI/CD Pipeline dengan GitHub Actions",
+            "date": "2026-02-25",
+            "description": "Implementasi CI/CD pipeline untuk automated deployment menggunakan GitHub Actions, dari testing hingga production deployment.",
+            "tags": [
+                "DevOps",
+                "CI/CD"
+            ],
+            "contentPath": "blog-posts/cicd-github-actions.html",
+            "readTime": "7 min read",
+            "status": "published"
+        },
+        {
+            "id": 4,
+            "title": "Network Security dengan Fortinet",
+            "date": "2026-03-01",
+            "description": "Pengalaman mengimplementasikan network security menggunakan Fortinet FortiGate, dari basic configuration hingga advanced security policies.",
+            "tags": [
+                "Security",
+                "Network"
+            ],
+            "contentPath": "blog-posts/network-security-fortinet.html",
+            "readTime": "9 min read",
+            "status": "published"
+        },
+        {
+            "id": 5,
+            "title": "Citrix VDI Implementation Guide",
+            "date": "2026-03-05",
+            "description": "Step-by-step guide implementasi Citrix Virtual Apps and Desktops untuk enterprise environment dengan high availability setup.",
+            "tags": [
+                "Citrix",
+                "VDI"
+            ],
+            "contentPath": "blog-posts/citrix-vdi-implementation.html",
+            "readTime": "10 min read",
+            "status": "published"
+        },
+        {
+            "id": 6,
+            "title": "Monitoring Infrastructure dengan Grafana",
+            "date": "2026-03-10",
+            "description": "Setup monitoring dan observability untuk infrastructure menggunakan Grafana, Prometheus, dan CloudWatch untuk real-time insights.",
+            "tags": [
+                "Monitoring",
+                "Grafana"
+            ],
+            "contentPath": "blog-posts/monitoring-grafana.html",
+            "readTime": "8 min read",
+            "status": "published"
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+<div class="blog-content">
+    <h1>Network Security dengan Fortinet</h1>
+
+    <div class="meta-info">
+        <span class="date">1 Maret 2026</span>
+        <span class="read-time">9 min read</span>
+    </div>
+
+    <h2>Introduction</h2>
+    <p>
+        Keamanan jaringan adalah fondasi dari infrastruktur IT yang aman. Pengalaman saya mengimplementasikan Fortinet
+        FortiGate mengajarkan banyak hal tentang Next-Generation Firewalling (NGFW).
+    </p>
+
+    <h2>Key Features Implemented</h2>
+    <ul>
+        <li><strong>SD-WAN:</strong> Mengoptimalkan koneksi antar cabang dengan biaya efisien.</li>
+        <li><strong>SSL Inspection:</strong> Mendeteksi ancaman yang bersembunyi di dalam traffic terenkripsi.</li>
+        <li><strong>IPS/IDS:</strong> Mencegah serangan intrusi secara real-time.</li>
+    </ul>
+
+    <h2>Configuration Snippet</h2>
+    <p>
+        Berikut adalah contoh konfigurasi CLI untuk policy dasar:
+    </p>
+
+    <pre><code>config firewall policy
+    edit 1
+        set name "LAN-to-WAN"
+        set srcintf "port2"
+        set dstintf "port1"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set nat enable
+    next
+end</code></pre>
+
+    <h2>Best Practices</h2>
+    <p>
+        Selalu terapkan prinsip "Least Privilege". Hanya buka port yang benar-benar dibutuhkan. Lakukan backup
+        konfigurasi secara berkala dan update firmware untuk patch security vulnerabilities.
+    </p>
+</div>

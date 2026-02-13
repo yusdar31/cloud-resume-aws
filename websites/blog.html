@@ -4,7 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Andi Yusdar Al Imran - Blog System & Cloud Engineering">
+    <meta name="description"
+        content="Blog Andi Yusdar Al Imran - Artikel tentang Cloud Engineering, DevOps, Infrastructure, dan pengalaman di bidang IT.">
+    <meta name="keywords" content="Cloud Engineering Blog, DevOps, AWS, Infrastructure, System Engineering">
+    <meta name="author" content="Andi Yusdar Al Imran">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+
     <title>Blog - Andi Yusdar Al Imran</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
@@ -49,43 +57,7 @@
             background: #10b981;
         }
 
-        /* Loading Animation */
-        @keyframes shimmer {
-            0% {
-                opacity: 0.5;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.5;
-            }
-        }
-
-        .loading-shimmer {
-            animation: shimmer 1.5s ease-in-out infinite;
-        }
-
-        /* Fade In Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        /* Blob Animation for Background */
+        /* Blob Animation */
         @keyframes blob {
             0% {
                 transform: translate(0px, 0px) scale(1);
@@ -116,16 +88,13 @@
             animation-delay: 2s;
         }
 
-        /* Scroll Reveal Effect */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+        /* Blog Card Hover Effect */
+        .blog-card {
+            transition: all 0.3s ease;
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .blog-card:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
@@ -140,199 +109,194 @@
         <div
             class="absolute -bottom-[20%] -right-[10%] w-[70vw] h-[70vw] bg-teal-900/20 rounded-full blur-[120px] animate-blob animation-delay-2000">
         </div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-emerald/5 rounded-full blur-[100px] animate-pulse-slow">
+        </div>
     </div>
 
+    <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="text-xl font-bold text-white tracking-tight">
+            <a href="index.html"
+                class="text-xl font-bold text-white tracking-tight hover:text-emerald transition-colors">
                 Andi Yusdar <span class="text-emerald">Al Imran</span>
             </a>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="index.html" class="hover:text-emerald transition-colors">Home</a>
-                <a href="blog.html" class="text-emerald transition-colors">Blog</a>
+            <div class="flex items-center gap-8 text-sm font-medium">
+                <a href="index.html#about" class="hover:text-emerald transition-colors">About</a>
+                <a href="index.html#journey" class="hover:text-emerald transition-colors">Journey</a>
+                <a href="index.html#skills" class="hover:text-emerald transition-colors">Skills</a>
+                <a href="index.html#projects" class="hover:text-emerald transition-colors">Projects</a>
+                <a href="blog.html" class="text-emerald">Blog</a>
+                <a href="index.html#contact" class="hover:text-emerald transition-colors">Contact</a>
             </div>
         </div>
     </nav>
 
-    <section class="min-h-screen pt-32 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-16 reveal">
-            <h1 class="text-5xl font-bold text-white mb-4">Engineering <span class="text-emerald">Blog</span></h1>
-            <p class="text-gray-400 max-w-2xl mx-auto">Sharing insights on Cloud Computing, DevOps, and Infrastructure
-                as Code.</p>
-        </div>
-
-        <!-- Blog Grid -->
-        <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Loading State -->
-            <div class="col-span-full text-center py-20 relative">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald/10 text-emerald">
-                    <i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>
-                    <span>Loading posts...</span>
-                </div>
+    <!-- Hero Section -->
+    <section class="min-h-[50vh] flex flex-col justify-center px-6 max-w-7xl mx-auto pt-32 pb-20 relative z-10">
+        <div class="text-center space-y-6">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald/10 border border-emerald/20 text-emerald text-sm font-medium">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                Blog & Articles
             </div>
-        </div>
 
-        <!-- Empty State (Hidden by default) -->
-        <div id="empty-state" class="hidden text-center py-20">
-            <div class="inline-flex p-4 rounded-full bg-emerald/10 text-emerald mb-4">
-                <i data-lucide="file-x" class="w-8 h-8"></i>
-            </div>
-            <h3 class="text-xl font-bold text-white mb-2">No posts found</h3>
-            <p class="text-gray-400">Check back later for new content!</p>
+            <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
+                Tech <span class="text-emerald">Insights</span>
+            </h1>
+
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Berbagi pengalaman, pembelajaran, dan insight seputar Cloud Engineering, DevOps, dan Infrastructure
+            </p>
         </div>
     </section>
 
-    <footer class="py-12 px-6 border-t border-white/5 text-center mt-20">
-        <p class="text-gray-500 text-sm">&copy; 2026 Andi Yusdar Al Imran | AWS Cloud Resume Challenge</p>
+    <!-- Blog Posts Section -->
+    <section class="py-20 px-6 max-w-7xl mx-auto relative z-10">
+        <!-- Dynamic Blog Posts Container -->
+        <div id="blog-posts-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Blog posts will be dynamically loaded here -->
+            <div class="col-span-full text-center py-20">
+                <i data-lucide="loader" class="w-12 h-12 text-emerald mx-auto animate-spin"></i>
+                <p class="text-gray-400 mt-4">Loading blog posts...</p>
+            </div>
+        </div>
+
+        <!-- Coming Soon Notice -->
+        <div class="mt-20 text-center">
+            <div class="inline-flex flex-col items-center gap-4 p-10 rounded-[32px] glass border-emerald/20">
+                <i data-lucide="pen-tool" class="w-12 h-12 text-emerald"></i>
+                <h3 class="text-2xl font-bold text-white">Artikel Segera Hadir</h3>
+                <p class="text-gray-400 max-w-md">
+                    Saya sedang menulis artikel-artikel menarik seputar Cloud Engineering, DevOps, dan Infrastructure.
+                    Stay tuned!
+                </p>
+                <a href="index.html#contact"
+                    class="mt-4 flex items-center gap-2 px-6 py-3 bg-emerald hover:bg-emerald/80 text-black font-bold rounded-xl transition-all">
+                    <i data-lucide="bell" class="w-4 h-4"></i>
+                    Hubungi Saya
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5 relative z-10">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray-500 text-sm">
+                © 2026 Andi Yusdar Al Imran. Built with <span class="text-emerald">AWS</span> & <span
+                    class="text-emerald">Terraform</span>
+            </p>
+            <div class="mt-4 flex justify-center gap-6">
+                <a href="https://github.com/yusdar31" target="_blank"
+                    class="text-gray-400 hover:text-emerald transition-colors">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                </a>
+                <a href="https://linkedin.com/in/andiyusdaralimran" target="_blank"
+                    class="text-gray-400 hover:text-emerald transition-colors">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+                <a href="mailto:andiyusdaralimran@gmail.com" class="text-gray-400 hover:text-emerald transition-colors">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Initialize Icons
-        try {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        } catch (e) {
-            console.warn('Lucide icons failed to load:', e);
-        }
-
-        // Scroll Reveal Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Blog Logic
-        const API_URL = "https://nfpsaxvwwd.execute-api.us-east-1.amazonaws.com/prod/blogs"; // Using same API ID base
-
-        async function fetchPosts() {
-            const grid = document.getElementById('blog-grid');
-            const emptyState = document.getElementById('empty-state');
-
+        // Fetch and render blog posts from JSON
+        async function fetchAndRenderBlogs() {
             try {
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error('Failed to fetch posts');
+                const response = await fetch('blogs.json');
+                const data = await response.json();
 
-                const posts = await response.json();
+                // Filter only published posts
+                const publishedPosts = data.posts.filter(post => post.status === 'published');
 
-                grid.innerHTML = '';
+                // Sort by date (newest first)
+                publishedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-                if (posts.length === 0) {
-                    emptyState.classList.remove('hidden');
-                    return;
-                }
-
-                posts.forEach(post => {
-                    const date = new Date(post.created_at * 1000).toLocaleDateString('id-ID', {
-                        year: 'numeric', month: 'long', day: 'numeric'
-                    });
-
-                    const card = document.createElement('div');
-                    card.className = 'glass rounded-3xl p-8 hover:border-emerald/30 transition-all group flex flex-col h-full reveal';
-                    card.innerHTML = `
-                        <div class="mb-6 flex items-center justify-between">
-                            <span class="text-xs font-mono text-emerald bg-emerald/10 px-2 py-1 rounded border border-emerald/20">
-                                ${(post.tags && post.tags[0]) || 'Tech'}
-                            </span>
-                            <span class="text-xs text-gray-500 flex items-center gap-1">
-                                <i data-lucide="calendar" class="w-3 h-3"></i> ${date}
-                            </span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-emerald transition-colors line-clamp-2">
-                            ${post.title}
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-6 flex-grow line-clamp-3">
-                            ${post.summary || post.content.substring(0, 100) + '...'}
-                        </p>
-                        <button onclick="readPost('${post.id}')" class="flex items-center gap-2 text-emerald font-semibold text-sm hover:gap-3 transition-all mt-auto">
-                            Read Article <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
-                    `;
-                    grid.appendChild(card);
-                    observer.observe(card); // Observe the new card
-                });
-
-                lucide.createIcons();
-
+                renderBlogPosts(publishedPosts);
             } catch (error) {
-                console.error('Error:', error);
-                grid.innerHTML = `
+                console.error('Error loading blog posts:', error);
+                document.getElementById('blog-posts-container').innerHTML = `
                     <div class="col-span-full text-center py-20">
-                        <p class="text-red-400 mb-4">Failed to load articles.</p>
-                        <button onclick="location.reload()" class="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm transition-colors">
-                            Try Again
-                        </button>
+                        <i data-lucide="alert-circle" class="w-12 h-12 text-red-500 mx-auto"></i>
+                        <p class="text-gray-400 mt-4">Failed to load blog posts. Please try again later.</p>
                     </div>
                 `;
+                lucide.createIcons();
             }
         }
 
-        // Simple Modal or Navigation to detail page
-        // For simplicity, we'll alert or log, but ideally we should have a detail view.
-        // Or we can just expand the card.
-        // Let's implement a simple modal for reading.
+        function renderBlogPosts(posts) {
+            const container = document.getElementById('blog-posts-container');
 
-        function readPost(id) {
-            // Fetch single post details
-            fetch(`${API_URL}/${id}`)
-                .then(res => res.json())
-                .then(post => {
-                    // Create modal (simplified)
-                    const modal = document.createElement('div');
-                    modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm fade-in';
-                    modal.innerHTML = `
-                        <div class="bg-[#111] border border-white/10 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto relative">
-                             <button onclick="this.parentElement.parentElement.remove()" class="absolute top-6 right-6 p-2 bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-500 rounded-full transition-colors">
-                                <i data-lucide="x" class="w-5 h-5"></i>
-                            </button>
-                            <div class="p-8 md:p-12">
-                                <div class="flex items-center gap-4 text-sm text-gray-500 mb-6">
-                                    <span>${new Date(post.created_at * 1000).toLocaleDateString()}</span>
-                                    <span>•</span>
-                                    <span class="text-emerald">By ${post.author || 'Andi Yusdar'}</span>
-                                </div>
-                                <h1 class="text-3xl md:text-5xl font-bold text-white mb-8">${post.title}</h1>
-                                
-                                <div class="prose prose-invert prose-emerald max-w-none">
-                                    ${post.content.replace(/\n/g, '<br>')}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(modal);
-                    if (typeof lucide !== 'undefined') {
-                        lucide.createIcons();
-                    }
-                    document.body.style.overflow = 'hidden';
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-20">
+                        <i data-lucide="file-text" class="w-12 h-12 text-emerald mx-auto"></i>
+                        <p class="text-gray-400 mt-4">No blog posts available yet.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
 
-                    // Close on click outside
-                    modal.addEventListener('click', (e) => {
-                        if (e.target === modal) {
-                            modal.remove();
-                            document.body.style.overflow = '';
-                        }
-                    });
-                    // Close button handling is inline
-                })
-                .catch(err => alert('Failed to load post details'));
+            container.innerHTML = posts.map(post => createBlogCard(post)).join('');
+            lucide.createIcons();
         }
 
-        document.addEventListener('DOMContentLoaded', fetchPosts);
+        function createBlogCard(post) {
+            const formattedDate = formatDate(post.date);
+            const tagsHTML = post.tags.map(tag =>
+                `<span class="px-3 py-1 bg-emerald/10 text-emerald rounded-full text-xs border border-emerald/20">${tag}</span>`
+            ).join('');
+
+            return `
+                <a href="blog-details.html?id=${post.id}" class="block group">
+                    <article class="blog-card h-full p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all">
+                        <div class="mb-6">
+                            <div class="flex items-center gap-2 text-xs text-emerald mb-4">
+                                <i data-lucide="calendar" class="w-3 h-3"></i>
+                                <span>${formattedDate}</span>
+                                <span class="mx-2">•</span>
+                                <i data-lucide="clock" class="w-3 h-3"></i>
+                                <span>${post.readTime}</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-white group-hover:text-emerald transition-colors mb-4 line-clamp-2">
+                                ${post.title}
+                            </h2>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                                ${post.description}
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <div class="flex gap-2 flex-wrap">
+                                ${tagsHTML}
+                            </div>
+                            <div class="w-8 h-8 rounded-full bg-emerald/10 flex items-center justify-center group-hover:bg-emerald/20 transition-colors">
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-emerald group-hover:translate-x-0.5 transition-transform"></i>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+            `;
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndRenderBlogs();
+        });
     </script>
 </body>
 
