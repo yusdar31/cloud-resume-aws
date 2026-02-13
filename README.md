@@ -104,7 +104,7 @@ The architecture follows the **Cloud Resume Challenge** requirements:
 ## 👤 Author
 
 **Andi Yusdar Al Imran**
-- [LinkedIn](https://linkedin.com/in/andiyusdar)
+- [LinkedIn](https://www.linkedin.com/in/andiyusdaralimran/)
 - [GitHub](https://github.com/yusdar31)
 
 ---
