@@ -6,7 +6,7 @@
 
 This repository contains the source code and infrastructure for my **Cloud Resume Challenge**. It showcases a serverless resume website deployed on AWS, built with Infrastructure as Code (IaC) and automated CI/CD pipelines.
 
-**Live Demo:** [Check out my Cloud Resume](https://d150bm922en909.cloudfront.net) *(Replace with your custom domain if applicable)*
+**Live Demo:** [Check out my Cloud Resume]([https://d150bm922en909.cloudfront.net](https://www.andiyusdaralimran.my.id/))
 
 ## 🚀 Features
 
