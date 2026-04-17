@@ -6,7 +6,7 @@
 
 This repository contains the source code and infrastructure for my **Cloud Resume Challenge**. It showcases a serverless resume website deployed on AWS, built with Infrastructure as Code (IaC) and automated CI/CD pipelines.
 
-<img width="2816" height="1536" alt="Gemini_Generated_Image_oaggi7oaggi7oagg" src="https://github.com/user-attachments/assets/7f2a124c-9ac9-4d4c-966d-78c7e3c8b052" />
+<img width="2816" height="1536" alt="Gemini_Generated_Image_sov2zxsov2zxsov2" src="https://github.com/user-attachments/assets/601f7389-5126-4f50-8cb9-ea2b23d941cd" />
 
 **Live Demo:** Check out my Cloud Resume : https://www.andiyusdaralimran.my.id/
 
