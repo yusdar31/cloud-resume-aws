@@ -1,13 +1,12 @@
 # Cloud Resume Challenge - AWS Edition ☁️
 
-<img width="2816" height="1536" alt="Gemini_Generated_Image_oaggi7oaggi7oagg" src="https://github.com/user-attachments/assets/7f2a124c-9ac9-4d4c-966d-78c7e3c8b052" />
-
-
 ![AWS Cloud Resume Challenge](https://img.shields.io/badge/AWS-Cloud_Resume_Challenge-232f3e?style=for-the-badge&logo=amazon-aws)
 ![Terraform](https://img.shields.io/badge/Terraform-IaC-7b42bc?style=for-the-badge&logo=terraform)
 ![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088ff?style=for-the-badge&logo=github-actions)
 
 This repository contains the source code and infrastructure for my **Cloud Resume Challenge**. It showcases a serverless resume website deployed on AWS, built with Infrastructure as Code (IaC) and automated CI/CD pipelines.
+
+<img width="2816" height="1536" alt="Gemini_Generated_Image_oaggi7oaggi7oagg" src="https://github.com/user-attachments/assets/7f2a124c-9ac9-4d4c-966d-78c7e3c8b052" />
 
 **Live Demo:** Check out my Cloud Resume : https://www.andiyusdaralimran.my.id/
 
