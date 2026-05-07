@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -47,58 +47,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
-        :root {
-            --bg: #050608;
-            --fg: #e9edf4;
-            --muted: #a0a7b4;
-            --card: rgba(255, 255, 255, 0.05);
-            --card-2: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.10);
-            --border-2: rgba(255, 255, 255, 0.14);
-            --accent: #10b981;
-            --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg);
-            color: var(--fg);
             transition: background-color 0.3s, color 0.3s;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            letter-spacing: -0.02em;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.18;
-            background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 55%);
-            background-size: 72px 72px, 72px 72px, 100% 100%;
-            mix-blend-mode: overlay;
-        }
-
         .glass {
-            background: linear-gradient(180deg, var(--card-2), var(--card));
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
         }
 
         .text-emerald {
@@ -112,202 +71,6 @@
         .border-emerald-glow {
             border-color: rgba(16, 185, 129, 0.3);
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
-        }
-
-        .glass:hover {
-            border-color: var(--border-2);
-        }
-
-        /* 21st.dev-like "components" (lightweight, no framework) */
-        .c-card {
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
-        }
-
-        .c-card::after {
-            content: "";
-            position: absolute;
-            inset: -1px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 220ms ease;
-            background:
-                radial-gradient(1200px 600px at -10% -20%, rgba(16, 185, 129, 0.16), transparent 50%),
-                radial-gradient(900px 500px at 110% 120%, rgba(16, 185, 129, 0.10), transparent 55%);
-            mix-blend-mode: screen;
-        }
-
-        .c-card:hover::after {
-            opacity: 1;
-        }
-
-        .c-btn {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .c-btn:focus-visible {
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25);
-        }
-
-        .c-btn-primary {
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.95), rgba(16, 185, 129, 0.75));
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            box-shadow: 0 18px 40px rgba(16, 185, 129, 0.18);
-        }
-
-        .c-btn-primary:hover {
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.88), rgba(16, 185, 129, 0.62));
-        }
-
-        .c-btn-ghost {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-        }
-
-        .c-btn-ghost:hover {
-            background: rgba(16, 185, 129, 0.10);
-            border-color: rgba(16, 185, 129, 0.30);
-            color: rgba(16, 185, 129, 1);
-        }
-
-        .c-nav-link {
-            position: relative;
-            color: #d1d5db;
-            transition: color 180ms ease;
-        }
-
-        .c-nav-link::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -0.45rem;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.95), transparent);
-            transform: scaleX(0);
-            transform-origin: center;
-            transition: transform 180ms ease;
-        }
-
-        .c-nav-link:hover {
-            color: #ffffff;
-        }
-
-        .c-nav-link:hover::after {
-            transform: scaleX(1);
-        }
-
-        .c-status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.15rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-        }
-
-        .c-status-dot {
-            width: 0.65rem;
-            height: 0.65rem;
-            border-radius: 999px;
-            background: #10b981;
-            box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.12);
-        }
-
-        .c-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.65rem;
-            padding: 0.9rem 1.2rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.025));
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            color: #10b981;
-        }
-
-        .c-hero-stage {
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background:
-                linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.88) 38%, rgba(0, 30, 24, 0.92) 100%),
-                radial-gradient(circle at top right, rgba(16, 185, 129, 0.18), transparent 30%);
-            box-shadow: var(--shadow);
-        }
-
-        .c-hero-grid {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .c-hero-title {
-            font-size: clamp(3.8rem, 9vw, 6rem);
-            line-height: 0.95;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-        }
-
-        .c-hero-copy {
-            color: #a7b0bf;
-            font-size: clamp(1.05rem, 1.8vw, 1.2rem);
-            line-height: 1.75;
-            max-width: 40rem;
-        }
-
-        .c-hero-visual {
-            position: relative;
-            min-height: 32rem;
-            border-radius: 2.5rem;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.03);
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
-        }
-
-        .c-hero-visual::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.35)),
-                radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.12), transparent 35%);
-            z-index: 1;
-        }
-
-        .c-hero-badge {
-            position: absolute;
-            left: 1.75rem;
-            right: 1.75rem;
-            bottom: 1.75rem;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.35rem 1.5rem;
-            border-radius: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: linear-gradient(180deg, rgba(20, 20, 20, 0.86), rgba(18, 18, 18, 0.72));
-            backdrop-filter: blur(16px);
-        }
-
-        @media (min-width: 960px) {
-            .c-hero-grid {
-                grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
-                align-items: stretch;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .c-card::after {
-                transition: none;
-            }
         }
 
         ::-webkit-scrollbar {
@@ -421,28 +184,27 @@
     </style>
 </head>
 
-<body class="selection:bg-emerald/30 selection:text-white overflow-x-hidden relative">
+<body class="bg-black text-gray-200 font-sans selection:bg-emerald/30 selection:text-white overflow-x-hidden relative">
 
     <!-- Animated Background Effects -->
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <!-- Orb 1: Top Left -->
         <div
-            class="absolute top-[5%] -left-[15%] w-[60vw] h-[60vw] bg-emerald/8 rounded-full blur-[140px] animate-blob">
+            class="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] bg-emerald/10 rounded-full blur-[120px] animate-blob">
         </div>
 
         <!-- Orb 2: Bottom Right -->
         <div
-            class="absolute bottom-[5%] -right-[15%] w-[60vw] h-[60vw] bg-emerald/10 rounded-full blur-[140px] animate-blob animation-delay-2000">
+            class="absolute -bottom-[20%] -right-[10%] w-[70vw] h-[70vw] bg-teal-900/20 rounded-full blur-[120px] animate-blob animation-delay-2000">
         </div>
 
         <!-- Orb 3: Center (Subtle) -->
         <div
-            class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-emerald/5 rounded-full blur-[160px] animate-pulse-slow">
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-emerald/5 rounded-full blur-[100px] animate-pulse-slow">
         </div>
     </div>
 
-    <div class="relative z-10">
-        <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#about" class="text-xl font-bold text-white tracking-tight hover:text-emerald transition-colors">
@@ -452,12 +214,13 @@
             <div class="flex items-center gap-8">
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-                    <a href="#about" class="c-nav-link">About</a>
-                    <a href="#journey" class="c-nav-link">Journey</a>
-                    <a href="#skills" class="c-nav-link">Skills</a>
-                    <a href="#projects" class="c-nav-link">Projects</a>
-                    <a href="#blog-preview" class="c-nav-link">Blog</a>
-                    <a href="#contact" class="c-nav-link">Contact</a>
+                    <a href="#journey" class="hover:text-emerald transition-colors">Journey</a>
+                    <a href="#education" class="hover:text-emerald transition-colors">Education</a>
+                    <a href="#skills" class="hover:text-emerald transition-colors">Skills</a>
+                    <a href="#projects" class="hover:text-emerald transition-colors">Projects</a>
+                    <a href="#blog-preview" class="hover:text-emerald transition-colors">Blog</a>
+                    <a href="#contact"
+                        class="px-4 py-2 bg-emerald hover:bg-emerald/90 text-white rounded-lg transition-all">Contact</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -479,8 +242,8 @@
         </button>
 
         <div class="flex flex-col gap-6 mt-16 text-lg font-medium">
-            <a href="#about" class="mobile-menu-link hover:text-emerald transition-colors">About</a>
             <a href="#journey" class="mobile-menu-link hover:text-emerald transition-colors">Journey</a>
+            <a href="#education" class="mobile-menu-link hover:text-emerald transition-colors">Education</a>
             <a href="#skills" class="mobile-menu-link hover:text-emerald transition-colors">Skills</a>
             <a href="#projects" class="mobile-menu-link hover:text-emerald transition-colors">Projects</a>
             <a href="#blog-preview" class="mobile-menu-link hover:text-emerald transition-colors">Blog</a>
@@ -488,190 +251,86 @@
         </div>
     </div>
 
-    <section id="about" class="min-h-screen flex flex-col justify-center px-0 pt-20">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="c-hero-stage rounded-[38px] md:rounded-[44px]">
-                <div class="c-hero-grid px-6 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14">
-                    <div class="flex flex-col justify-center gap-8 lg:gap-10">
-                        <div class="c-status-pill text-xs font-semibold uppercase tracking-[0.2em] text-emerald w-fit">
-                            <span class="c-status-dot"></span>
-                            Open Work as Cloud Engineer
-                        </div>
+    <section id="about" class="min-h-screen flex flex-col justify-center px-6 max-w-7xl mx-auto pt-20">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald/10 border border-emerald/20 text-emerald text-xs font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald animate-pulse"></span>
+                    Open Work as Cloud Engineer
+                </div>
 
-                        <div class="space-y-6">
-                            <h1 class="c-hero-title text-white">
-                                Hi, I'm<br>
-                                <span class="text-emerald">Andi Yusdar</span><br>
-                                Al Imran
-                            </h1>
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
+                    Hi, I'm <br>
+                    <span class="text-emerald">Andi Yusdar</span><br>
+                    Al Imran
+                </h1>
 
-                            <div class="flex flex-wrap gap-3">
-                                <span class="c-chip text-sm">
-                                    <i data-lucide="server" class="w-4 h-4"></i>
-                                    System Engineer
-                                </span>
-                                <span class="c-chip text-sm">
-                                    <i data-lucide="network" class="w-4 h-4"></i>
-                                    Network Infrastructure
-                                </span>
-                                <span class="c-chip text-sm">
-                                    <i data-lucide="shield-check" class="w-4 h-4"></i>
-                                    IT Support
-                                </span>
+                <div class="flex flex-wrap gap-3">
+                    <span
+                        class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
+                        <i data-lucide="server" class="w-4 h-4"></i> System Engineer
+                    </span>
+                    <span
+                        class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
+                        <i data-lucide="network" class="w-4 h-4"></i> Network Infrastructure
+                    </span>
+                    <span
+                        class="flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-emerald text-sm">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i> IT Support
+                    </span>
+                </div>
+
+                <p class="text-lg text-gray-400 max-w-xl leading-relaxed">
+                    Seorang <span class="text-white font-medium">System Engineer</span> yang
+                    berpengalaman dalam
+                    mengelola infrastruktur IT skala besar, virtualisasi, dan jaringan multi-vendor. Berfokus pada <span
+                        class="text-emerald">stabilitas sistem</span> dan efisiensi teknologi.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="#contact"
+                        class="flex items-center gap-2 px-8 py-4 bg-emerald hover:bg-emerald/80 text-black font-bold rounded-xl transition-all shadow-lg shadow-emerald/20">
+                        <i data-lucide="mail" class="w-5 h-5"></i> Contact Me
+                    </a>
+                    <a href="#journey"
+                        class="flex items-center gap-2 px-8 py-4 border border-gray-200 dark:border-white/20 hover:border-emerald/50 hover:text-emerald text-white font-bold rounded-xl transition-all">
+                        View Journey <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative hidden md:block">
+                <div
+                    class="w-full aspect-square glass rounded-[40px] flex items-center justify-center relative overflow-hidden border border-emerald/20 group">
+                    <div class="absolute inset-0 bg-emerald/10 animate-pulse"></div>
+                    <img src="assets/profile.jpg" alt="Andi Yusdar Al Imran"
+                        class="w-full h-full object-cover relative z-10 transition-transform duration-500 group-hover:scale-105">
+
+                    <!-- Overlay Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-20">
+                    </div>
+
+                    <!-- Floating Badge -->
+                    <div
+                        class="absolute bottom-6 left-6 right-6 p-4 glass rounded-2xl border border-emerald/20 backdrop-blur-md z-30 transform transition-all duration-300 group-hover:translate-y-[-5px]">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-emerald/20 rounded-lg text-emerald">
+                                <i data-lucide="user-check" class="w-5 h-5"></i>
                             </div>
-
-                            <p class="c-hero-copy">
-                                Seorang <span class="text-white font-semibold">System Engineer</span> yang berpengalaman dalam
-                                mengelola infrastruktur IT skala besar, virtualisasi, dan jaringan multi-vendor.
-                                Berfokus pada <span class="text-emerald">stabilitas sistem</span> dan efisiensi teknologi.
-                            </p>
-                        </div>
-
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#contact"
-                                class="c-btn c-btn-primary flex items-center gap-3 px-10 py-5 text-black font-bold rounded-2xl transition-all text-lg">
-                                <i data-lucide="mail" class="w-5 h-5"></i>
-                                Contact Me
-                            </a>
-                            <a href="#journey"
-                                class="c-btn c-btn-ghost flex items-center gap-3 px-10 py-5 text-white font-bold rounded-2xl transition-all text-lg">
-                                View Journey
-                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="relative">
-                        <div class="c-hero-visual group">
-                            <img src="assets/profile.jpg" alt="Andi Yusdar Al Imran"
-                                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent z-[2]"></div>
-                            <div class="c-hero-badge">
-                                <div class="h-12 w-12 rounded-2xl bg-emerald/10 border border-emerald/20 flex items-center justify-center text-emerald shrink-0">
-                                    <i data-lucide="user-check" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <div class="text-white text-2xl font-bold leading-none">System Engineer</div>
-                                    <div class="mt-2 text-[11px] text-emerald uppercase tracking-[0.28em] font-bold">
-                                        Open for Work
-                                    </div>
+                            <div>
+                                <div class="text-white font-bold">System Engineer</div>
+                                <div class="text-[10px] text-emerald uppercase tracking-widest font-bold">Open for Work
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 21st.dev-inspired Bento Cards -->
-        <div class="mt-12 px-6 max-w-7xl mx-auto grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div class="glass rounded-[24px] p-6 border border-white/5 hover:border-emerald/30 transition-all">
-                <div class="flex items-center gap-3 mb-4">
-                    <div
-                        class="h-10 w-10 rounded-xl bg-emerald/10 border border-emerald/20 flex items-center justify-center text-emerald">
-                        <i data-lucide="layers" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-gray-400 uppercase tracking-widest">Project</div>
-                        <div class="text-white font-bold">Cloud Resume Stack</div>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-400 leading-relaxed">
-                    Infrastruktur resume ini dibangun end-to-end di AWS dan di-deploy dengan Terraform.
-                </p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">S3 +
-                        CloudFront</span>
-                    <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">Route
-                        53</span>
-                    <span
-                        class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">API
-                        Gateway</span>
-                    <span
-                        class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">Lambda</span>
-                    <span
-                        class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">DynamoDB</span>
-                    <span
-                        class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-200">Terraform</span>
-                </div>
-            </div>
-
-            <div class="glass rounded-[24px] p-6 border border-white/5 hover:border-emerald/30 transition-all">
-                <div class="flex items-center gap-3 mb-4">
-                    <div
-                        class="h-10 w-10 rounded-xl bg-emerald/10 border border-emerald/20 flex items-center justify-center text-emerald">
-                        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-gray-400 uppercase tracking-widest">Availability</div>
-                        <div class="text-white font-bold">Open For Work</div>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-400 leading-relaxed">
-                    Terbuka untuk role Cloud Engineer / DevOps. Prefer hybrid/remote di WIB.
-                </p>
-                <div class="mt-4 grid grid-cols-2 gap-2 text-xs">
-                    <div class="rounded-xl bg-white/5 border border-white/10 p-3">
-                        <div class="text-gray-500">Location</div>
-                        <div class="text-gray-200 font-semibold">Jakarta</div>
-                    </div>
-                    <div class="rounded-xl bg-white/5 border border-white/10 p-3">
-                        <div class="text-gray-500">Timezone</div>
-                        <div class="text-gray-200 font-semibold">WIB (UTC+7)</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass rounded-[24px] p-6 border border-white/5 hover:border-emerald/30 transition-all">
-                <div class="flex items-center gap-3 mb-4">
-                    <div
-                        class="h-10 w-10 rounded-xl bg-emerald/10 border border-emerald/20 flex items-center justify-center text-emerald">
-                        <i data-lucide="sparkles" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-gray-400 uppercase tracking-widest">Now</div>
-                        <div class="text-white font-bold">Building & Learning</div>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-400 leading-relaxed">
-                    Fokus pada cloud automation, observability, dan praktik DevOps yang rapi dan repeatable.
-                </p>
-                <div class="mt-4 flex items-center gap-3 text-sm">
-                    <a href="#projects" class="text-emerald hover:text-emerald/80 font-semibold inline-flex items-center gap-1">
-                        Lihat projects <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="glass rounded-[24px] p-6 border border-white/5 hover:border-emerald/30 transition-all">
-                <div class="flex items-center gap-3 mb-4">
-                    <div
-                        class="h-10 w-10 rounded-xl bg-emerald/10 border border-emerald/20 flex items-center justify-center text-emerald">
-                        <i data-lucide="link" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-gray-400 uppercase tracking-widest">Links</div>
-                        <div class="text-white font-bold">Find Me Online</div>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-400 leading-relaxed">
-                    Repo dan profile profesional untuk lihat karya dan aktivitas.
-                </p>
-                <div class="mt-4 flex items-center gap-2">
-                    <a href="https://github.com/yusdar31" target="_blank"
-                        class="flex-1 rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-xs text-gray-200 hover:border-emerald/30 hover:bg-emerald/10 transition-all inline-flex items-center justify-center gap-2">
-                        <i class="fab fa-github text-base"></i> GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/andiyusdaralimran/" target="_blank"
-                        class="flex-1 rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-xs text-gray-200 hover:border-emerald/30 hover:bg-emerald/10 transition-all inline-flex items-center justify-center gap-2">
-                        <i class="fab fa-linkedin text-base"></i> LinkedIn
-                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="journey" class="py-32 px-6 max-w-7xl mx-auto">
+    <section id="journey" class="py-32 px-6 max-w-7xl mx-auto bg-black">
         <div class="text-center mb-20">
             <h2 class="text-4xl font-bold text-white">Professional <span class="text-emerald">Journey</span></h2>
             <p class="mt-4 text-gray-500">Rekam jejak profesional saya di bidang IT Infrastructure & Systems</p>
@@ -680,7 +339,7 @@
         <div class="space-y-12">
             <!-- Experience 1 -->
             <div
-                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass c-card hover:border-emerald/30 transition-all">
+                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/mastersystem.png" alt="Mastersystem Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
@@ -728,7 +387,7 @@
 
             <!-- Experience 2 -->
             <div
-                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass c-card hover:border-emerald/30 transition-all">
+                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/mvt.png" alt="MVT Makassar Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
@@ -775,7 +434,7 @@
 
             <!-- Experience 3 -->
             <div
-                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass c-card hover:border-emerald/30 transition-all">
+                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/sier.png" alt="SIER Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
@@ -811,7 +470,7 @@
 
             <!-- Experience 4 -->
             <div
-                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass c-card hover:border-emerald/30 transition-all">
+                class="group relative grid md:grid-cols-[1fr_3fr] gap-8 p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="text-emerald font-bold space-y-2">
                     <img src="assets/logos/infinitelearning.png" alt="Infinite Learning Logo"
                         class="w-24 h-auto mb-4 object-contain bg-white p-2 rounded-lg">
@@ -848,7 +507,7 @@
 
         <div class="grid md:grid-cols-2 gap-8">
             <!-- University -->
-            <div class="p-8 rounded-[32px] glass c-card border border-emerald/20 relative overflow-hidden group">
+            <div class="p-8 rounded-[32px] glass border border-emerald/20 relative overflow-hidden group">
                 <div
                     class="absolute top-0 right-0 p-3 bg-emerald/10 rounded-bl-2xl border-b border-l border-emerald/20 text-emerald font-bold text-xs">
                     IPK: 3.81
@@ -869,7 +528,7 @@
             </div>
 
             <!-- High School -->
-            <div class="p-8 rounded-[32px] glass c-card border-white/5 relative overflow-hidden group">
+            <div class="p-8 rounded-[32px] glass border-white/5 relative overflow-hidden group">
                 <div class="flex items-center gap-4 mb-6">
                     <img src="assets/logos/smk5.png" alt="SMK Negeri 5 Makassar Logo" class="w-16 h-16 object-contain">
                     <div>
@@ -894,7 +553,7 @@
 
         <div class="grid lg:grid-cols-3 gap-8">
             <!-- Category 1: Cloud & DevOps -->
-            <div class="p-10 rounded-[40px] glass c-card border-white/5 hover:border-emerald/30 transition-all group">
+            <div class="p-10 rounded-[40px] glass border-white/5 hover:border-emerald/30 transition-all group">
                 <div class="flex items-center gap-4 mb-10 text-emerald font-bold text-lg">
                     <div
                         class="p-3 rounded-xl bg-emerald/10 border border-emerald/20 group-hover:bg-emerald/20 transition-colors">
@@ -936,7 +595,7 @@
             </div>
 
             <!-- Category 2: Infrastructure & Virtualization -->
-            <div class="p-10 rounded-[40px] glass c-card border-white/5 hover:border-emerald/30 transition-all group">
+            <div class="p-10 rounded-[40px] glass border-white/5 hover:border-emerald/30 transition-all group">
                 <div class="flex items-center gap-4 mb-10 text-emerald font-bold text-lg">
                     <div
                         class="p-3 rounded-xl bg-emerald/10 border border-emerald/20 group-hover:bg-emerald/20 transition-colors">
@@ -979,7 +638,7 @@
             </div>
 
             <!-- Category 3: Network & Security -->
-            <div class="p-10 rounded-[40px] glass c-card border-white/5 hover:border-emerald/30 transition-all group">
+            <div class="p-10 rounded-[40px] glass border-white/5 hover:border-emerald/30 transition-all group">
                 <div class="flex items-center gap-4 mb-10 text-emerald font-bold text-lg">
                     <div
                         class="p-3 rounded-xl bg-emerald/10 border border-emerald/20 group-hover:bg-emerald/20 transition-colors">
@@ -1025,7 +684,7 @@
 
     </section>
 
-    <section id="certifications" class="py-32 px-6 max-w-7xl mx-auto">
+    <section id="certifications" class="py-32 px-6 max-w-7xl mx-auto bg-gray-50 dark:bg-black">
         <div class="text-center mb-20">
             <h2 class="text-4xl font-bold text-white">Certifications & <span class="text-emerald">Licenses</span></h2>
             <p class="mt-4 text-gray-500">Profesional certifications dan lisensi keahlian</p>
@@ -1063,11 +722,9 @@
                 </div>
                 <div class="mt-2 flex flex-wrap gap-2">
                     <span
-                        class="inline-block px-2 py-1 bg-emerald/10 text-emerald rounded text-[10px] border border-emerald/20">Issued
-                        Apr 30, 2026</span>
+                        class="inline-block px-2 py-1 bg-emerald/10 text-emerald rounded text-[10px] border border-emerald/20">Issued Apr 30, 2026</span>
                     <span
-                        class="inline-block px-2 py-1 bg-white/5 text-gray-400 rounded text-[10px] border border-white/10">Exp
-                        Apr 30, 2029</span>
+                        class="inline-block px-2 py-1 bg-white/5 text-gray-400 rounded text-[10px] border border-white/10">Exp Apr 30, 2029</span>
                 </div>
             </div>
 
@@ -1181,14 +838,14 @@
         </div>
     </section>
 
-    <section id="organization" class="py-20 px-6 max-w-7xl mx-auto">
+    <section id="organization" class="py-20 px-6 max-w-7xl mx-auto bg-gray-50 dark:bg-black">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-white">Organizational <span class="text-emerald">Experience</span></h2>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
             <!-- HMTIK -->
-            <div class="p-8 rounded-[32px] glass c-card border-white/5 group hover:border-emerald/30 transition-all">
+            <div class="p-8 rounded-[32px] glass border-white/5 group hover:border-emerald/30 transition-all">
                 <div class="flex flex-col h-full">
                     <div class="mb-6">
                         <img src="assets/logos/himatik.png" alt="HIMATIK Logo"
@@ -1205,7 +862,7 @@
             </div>
 
             <!-- CNC -->
-            <div class="p-8 rounded-[32px] glass c-card border-white/5 group hover:border-emerald/30 transition-all">
+            <div class="p-8 rounded-[32px] glass border-white/5 group hover:border-emerald/30 transition-all">
                 <div class="flex flex-col h-full">
                     <div class="mb-6">
                         <img src="assets/logos/cnc.png" alt="CNC Logo" class="w-20 h-20 object-contain mb-4 mx-auto">
@@ -1222,7 +879,7 @@
             </div>
 
             <!-- UKM Bahasa -->
-            <div class="p-8 rounded-[32px] glass c-card border-white/5 group hover:border-emerald/30 transition-all">
+            <div class="p-8 rounded-[32px] glass border-white/5 group hover:border-emerald/30 transition-all">
                 <div class="flex flex-col h-full">
                     <div class="mb-6">
                         <img src="assets/logos/ukmbahasa.png" alt="UKM Bahasa Logo"
@@ -1248,7 +905,7 @@
 
         <div class="grid lg:grid-cols-3 gap-8">
             <!-- Project 1: Cloud Resume Challenge -->
-            <div class="group p-8 rounded-[32px] glass c-card hover:border-emerald/30 transition-all">
+            <div class="group p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
                         <i data-lucide="cloud" class="w-6 h-6 text-emerald"></i>
@@ -1297,7 +954,7 @@
             </div>
 
             <!-- Project 2: AWS 3-Tier Architecture -->
-            <div class="group p-8 rounded-[32px] glass c-card hover:border-emerald/30 transition-all">
+            <div class="group p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
                         <i data-lucide="layers" class="w-6 h-6 text-emerald"></i>
@@ -1343,7 +1000,7 @@
             </div>
 
             <!-- Project 3: Hybrid Cloud Security -->
-            <div class="group p-8 rounded-[32px] glass c-card hover:border-emerald/30 transition-all">
+            <div class="group p-8 rounded-[32px] glass hover:border-emerald/30 transition-all">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="p-3 rounded-xl bg-emerald/10 border border-emerald/20">
                         <i data-lucide="shield-alert" class="w-6 h-6 text-emerald"></i>
@@ -1392,7 +1049,7 @@
     </section>
 
     <!-- Blog Preview Section -->
-    <section id="blog-preview" class="py-32 px-6 max-w-7xl mx-auto">
+    <section id="blog-preview" class="py-32 px-6 max-w-7xl mx-auto bg-gray-50 dark:bg-black">
         <div class="text-center mb-20">
             <h2 class="text-4xl font-bold text-white">Latest <span class="text-emerald">Blog
                     Posts</span></h2>
@@ -1402,7 +1059,7 @@
         <div class="grid md:grid-cols-3 gap-8 mb-12">
             <!-- Blog Post 1 -->
             <article
-                class="group p-8 rounded-[32px] glass c-card border-white/5 hover:border-emerald/30 transition-all hover:-translate-y-2">
+                class="group p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all hover:-translate-y-2">
                 <div class="mb-6">
                     <div class="flex items-center gap-2 text-xs text-emerald mb-4">
                         <i data-lucide="calendar" class="w-3 h-3"></i>
@@ -1426,7 +1083,7 @@
 
             <!-- Blog Post 2 -->
             <article
-                class="group p-8 rounded-[32px] glass c-card border-white/5 hover:border-emerald/30 transition-all hover:-translate-y-2">
+                class="group p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all hover:-translate-y-2">
                 <div class="mb-6">
                     <div class="flex items-center gap-2 text-xs text-emerald mb-4">
                         <i data-lucide="calendar" class="w-3 h-3"></i>
@@ -1450,7 +1107,7 @@
 
             <!-- Blog Post 3 -->
             <article
-                class="group p-8 rounded-[32px] glass c-card border-white/5 hover:border-emerald/30 transition-all hover:-translate-y-2">
+                class="group p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all hover:-translate-y-2">
                 <div class="mb-6">
                     <div class="flex items-center gap-2 text-xs text-emerald mb-4">
                         <i data-lucide="calendar" class="w-3 h-3"></i>
@@ -1496,7 +1153,7 @@
         <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <!-- LinkedIn -->
             <a href="https://www.linkedin.com/in/andiyusdaralimran/" target="_blank"
-                class="group p-8 rounded-[32px] glass c-card border-white/5 hover:border-emerald/30 transition-all text-center">
+                class="group p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all text-center">
                 <div
                     class="inline-flex p-4 rounded-xl bg-emerald/10 border border-emerald/20 text-emerald mb-4 group-hover:bg-emerald/20 transition-colors">
                     <i class="fab fa-linkedin text-3xl"></i>
@@ -1508,7 +1165,7 @@
 
             <!-- GitHub -->
             <a href="https://github.com/yusdar31" target="_blank"
-                class="group p-8 rounded-[32px] glass c-card border-white/5 hover:border-emerald/30 transition-all text-center">
+                class="group p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all text-center">
                 <div
                     class="inline-flex p-4 rounded-xl bg-emerald/10 border border-emerald/20 text-emerald mb-4 group-hover:bg-emerald/20 transition-colors">
                     <i class="fab fa-github text-3xl"></i>
@@ -1520,7 +1177,7 @@
 
             <!-- Email -->
             <a href="mailto:andiyusdaralimran@gmail.com"
-                class="group p-8 rounded-[32px] glass c-card border-white/5 hover:border-emerald/30 transition-all text-center">
+                class="group p-8 rounded-[32px] glass border-white/5 hover:border-emerald/30 transition-all text-center">
                 <div
                     class="inline-flex p-4 rounded-xl bg-emerald/10 border border-emerald/20 text-emerald mb-4 group-hover:bg-emerald/20 transition-colors">
                     <i class="fas fa-envelope text-3xl"></i>
@@ -1569,7 +1226,6 @@
         class="fixed bottom-8 right-8 p-4 bg-emerald rounded-full shadow-lg shadow-emerald/20 opacity-0 pointer-events-none transition-all hover:scale-110 z-50">
         <i data-lucide="arrow-up" class="w-5 h-5 text-black"></i>
     </button>
-    </div>
 
     <script>
         // Inisialisasi Icon (with error handling)
@@ -1658,10 +1314,10 @@
                 counterElement.classList.remove('loading-shimmer');
                 counterElement.classList.add('fade-in');
                 counterElement.innerText = data.count.toLocaleString();
-                console.log('Counter updated successfully.');
+                console.log('Γ£à Counter updated successfully!');
 
             } catch (error) {
-                console.error('Error fetching count:', error);
+                console.error('Γ¥î Error fetching count:', error);
                 counterElement.classList.remove('loading-shimmer');
                 counterElement.innerText = "Error";
                 counterElement.classList.add("text-red-500");
