@@ -136,12 +136,8 @@ jobs:
   deploy_frontend:
     name: Deploy Frontend
     runs-on: ubuntu-latest
-    # If backend changed, wait for it. If not, don't wait (but we can't do dynamic dependency easily)
-    # Strategy: Just put `deploy_backend` in needs (optional). 
-    # But `needs` is strict. If `deploy_backend` is skipped, this might be skipped?
-    # No, skipped jobs in `needs` are considered success.
-    needs: [check_changes, deploy_backend]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.check_changes.outputs.frontend == 'true' || needs.check_changes.outputs.backend == 'true') }}
+    needs: [check_changes]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.check_changes.outputs.frontend == 'true' }}
     
     steps:
     - name: Checkout Code
