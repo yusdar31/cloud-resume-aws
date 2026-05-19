@@ -74,34 +74,7 @@ resource "aws_lambda_function" "visitor_counter" {
   }
 }
 
-# --- 3. Function URL (Cara Paling Simpel bikin API) ---
-# Di SAA nanti kamu belajar API Gateway, tapi Function URL adalah fitur baru AWS 
-# yang lebih simpel untuk kasus single function seperti ini.
-
-resource "aws_lambda_function_url" "api_url" {
-  function_name      = aws_lambda_function.visitor_counter.function_name
-  authorization_type = "NONE"
-
-  cors {
-    allow_credentials = true
-    allow_origins     = ["*"]
-    allow_methods     = ["GET", "POST"]
-    allow_headers     = ["*"]
-    expose_headers    = ["*"]
-    max_age           = 86400
-  }
-}
-
-# 2. Izin Publik (Tanpa Syarat yang Aneh-aneh)
-resource "aws_lambda_permission" "allow_public_access" {
-  statement_id           = "AllowPublicAccess_Final" # Kita kasih nama baru biar fresh
-  action                 = "lambda:InvokeFunctionUrl"
-  function_name          = aws_lambda_function.visitor_counter.function_name
-  principal              = "*"
-  function_url_auth_type = "NONE"
-}
-
-# --- 5. CloudWatch Log Group (Explicit) ---
+# --- 3. CloudWatch Log Group (Explicit) ---
 # Penting biar log tidak disimpan selamanya (mahal) dan rapi.
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
