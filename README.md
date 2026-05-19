@@ -6,6 +6,8 @@
 
 This repository contains the source code and infrastructure for my **Cloud Resume Challenge**. It showcases a serverless resume website deployed on AWS, built with Infrastructure as Code (IaC) and automated CI/CD pipelines.
 
+The project uses **API Gateway** as the public visitor counter endpoint in front of Lambda.
+
 <img width="2816" height="1536" alt="Gemini_Generated_Image_sov2zxsov2zxsov2" src="https://github.com/user-attachments/assets/601f7389-5126-4f50-8cb9-ea2b23d941cd" />
 
 **Live Demo:** Check out my Cloud Resume : https://www.andiyusdaralimran.my.id/
@@ -64,8 +66,8 @@ This repository contains the source code and infrastructure for my **Cloud Resum
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/yusdar31/cloud-resume-challange.git
-    cd cloud-resume-challange
+    git clone https://github.com/yusdar31/cloud-resume-aws.git
+    cd cloud-resume-aws
     ```
 
 2.  **Infrastructure Deployment (Terraform)**
@@ -74,6 +76,8 @@ This repository contains the source code and infrastructure for my **Cloud Resum
     terraform plan
     terraform apply
     ```
+
+    > **Note:** Terraform state is configured to use an S3 backend. Make sure the backend bucket already exists before running `terraform init`.
 
 3.  **Frontend Deployment**
     The frontend is automatically deployed via GitHub Actions on push to `main`.
