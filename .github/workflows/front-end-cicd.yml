@@ -1,242 +1,52 @@
-name: Deploy Cloud Resume to AWS
+name: Deploy Cloud Resume to Server
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-
-env:
-  AWS_REGION: us-east-1
-  TERRAFORM_VERSION: 1.5.0
+    paths:
+      - 'websites/**'
 
 jobs:
-  # Job 1: Check Changes (Path Filtering)
-  check_changes:
-    name: Check Changed Files
+  deploy:
+    name: Deploy to Server
     runs-on: ubuntu-latest
-    outputs:
-      backend: ${{ steps.filter.outputs.backend }}
-      frontend: ${{ steps.filter.outputs.frontend }}
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            backend:
-              - '*.tf'
-              - 'lambda/**'
-            frontend:
-              - 'websites/**'
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-  # Job 2: Backend Validation (Runs if backend changes)
-  validate:
-    name: Validate Backend
-    needs: check_changes
-    if: ${{ needs.check_changes.outputs.backend == 'true' }}
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
+      - name: Copy websites ke server via SCP
+        run: |
+          scp -i ~/.ssh/deploy_key -r websites/* \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/cloud-resume-deploy/
 
-    - name: Install Python Dependencies
-      run: |
-        pip install boto3 pytest
+      - name: Deploy ke Docker container
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
+            set -e
+            CONTAINER="cloud-resume-web"
+            WEBROOT="/usr/share/nginx/html"
+            DEPLOY_DIR="/tmp/cloud-resume-deploy"
 
-    - name: Validate Lambda Function Syntax
-      run: |
-        python -m py_compile lambda/func.py
-        echo "✅ Lambda function syntax is valid"
+            docker cp "$DEPLOY_DIR/." "$CONTAINER:$WEBROOT/"
+            rm -rf "$DEPLOY_DIR"
+            echo "Deploy selesai: $(date)"
+          ENDSSH
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: ${{ env.TERRAFORM_VERSION }}
-
-    - name: Terraform Format Check
-      run: terraform fmt -check -recursive
-
-    - name: Terraform Validate
-      run: |
-        terraform init -backend=false
-        terraform validate
-
-  # Job 3: Backend Plan (Runs if backend changes)
-  plan:
-    name: Terraform Plan
-    needs: validate
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: ${{ env.TERRAFORM_VERSION }}
-        terraform_wrapper: false
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: Terraform Init
-      run: terraform init
-
-    - name: Terraform Plan
-      run: terraform plan -no-color
-
-  # Job 4: Backend Deploy (Runs if backend changes & push to main)
-  deploy_backend:
-    name: Deploy Backend
-    runs-on: ubuntu-latest
-    needs: [check_changes, validate]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.check_changes.outputs.backend == 'true' }}
-    
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: ${{ env.TERRAFORM_VERSION }}
-        terraform_wrapper: false
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: Terraform Init
-      run: terraform init
-
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
-
-  # Job 5: Frontend Deploy (Runs if frontend changes OR backend changes)
-  deploy_frontend:
-    name: Deploy Frontend
-    runs-on: ubuntu-latest
-    needs: [check_changes, deploy_backend]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.check_changes.outputs.frontend == 'true' || needs.check_changes.outputs.backend == 'true') }}
-    
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: ${{ env.TERRAFORM_VERSION }}
-        terraform_wrapper: false
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: Terraform Init (Get Outputs)
-      run: terraform init
-
-    - name: Sync Website Files to S3
-      run: |
-        BUCKET_NAME=$(terraform output -raw bucket_name)
-        aws s3 sync ./websites s3://$BUCKET_NAME --delete
-        echo "✅ Website files synced to S3: $BUCKET_NAME"
-
-    - name: Get CloudFront Distribution ID
-      id: cloudfront
-      run: |
-        DIST_ID=$(terraform output -raw cloudfront_distribution_id)
-        echo "distribution_id=$DIST_ID" >> $GITHUB_OUTPUT
-        echo "✅ CloudFront Distribution ID: $DIST_ID"
-
-    - name: Invalidate CloudFront Cache
-      run: |
-        aws cloudfront create-invalidation \
-          --distribution-id ${{ steps.cloudfront.outputs.distribution_id }} \
-          --paths "/*"
-        echo "✅ CloudFront cache invalidation initiated"
-
-  # Job 6: Test Deployment (Simple Integration Test)
-  test:
-    name: Verify Deployment
-    runs-on: ubuntu-latest
-    needs: [deploy_backend, deploy_frontend]
-    # Run if EITHER deploy job ran (and succeeded/skipped)
-    if: ${{ always() && (needs.deploy_backend.result == 'success' || needs.deploy_backend.result == 'skipped') && (needs.deploy_frontend.result == 'success' || needs.deploy_frontend.result == 'skipped') && (needs.deploy_backend.result != 'skipped' || needs.deploy_frontend.result != 'skipped') }}
-    
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: ${{ env.TERRAFORM_VERSION }}
-        terraform_wrapper: false
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: Terraform Init
-      run: terraform init
-
-    - name: Test Website Availability
-      run: |
-        WEBSITE_URL=$(terraform output -raw website_url)
-        echo "Testing website: https://$WEBSITE_URL"
-
-        HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://$WEBSITE_URL)
-
-        if [ "$HTTP_CODE" != "200" ]; then
-          echo "❌ Website test failed! HTTP $HTTP_CODE"
-          exit 1
-        fi
-
-        echo "✅ Website is accessible!"
-
-    - name: Test Visitor Counter API
-      run: |
-        API_URL=$(terraform output -raw api_gateway_url)
-        echo "Testing visitor counter API: $API_URL"
-
-        HTTP_CODE=$(curl -s -o response.json -w "%{http_code}" "$API_URL")
-
-        if [ "$HTTP_CODE" != "200" ]; then
-          echo "❌ Visitor counter API test failed! HTTP $HTTP_CODE"
-          cat response.json || true
-          exit 1
-        fi
-
-        python - <<'PY'
-        import json
-        with open('response.json', 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        if 'count' not in data:
-            raise SystemExit('❌ API response missing "count" field')
-        print(f'✅ Visitor counter API returned count={data["count"]}')
-        PY
+      - name: Verify deployment
+        run: |
+          sleep 3
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.SERVER_HOST }}:8080/)
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Verify gagal: HTTP $HTTP_CODE"
+            exit 1
+          fi
+          echo "Website accessible: HTTP $HTTP_CODE"
