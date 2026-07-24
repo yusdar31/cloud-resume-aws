@@ -1,0 +1,7 @@
+<h1>Docker Networking Deep Dive: Bridge, Host, dan Overlay Network</h1>
+
+<p>Docker hubung container lewat network namespace. Salah pilih driver buat app lambat, security bocor. Paham cara kerja network penting untuk deploy production.</p>
+
+<h2>1. Bridge Network (Default)</h2>
+<p>Bridge network isolasi container dalam satu host. Docker bikin interface virtual <code>docker0</code>. Setiap container dapat IP privat dari subnet bridge.</p>
+<p>Saat container jalan di bridge network, Docker buat <code>veth</code> (virtual ethernet) pair. Satu ujung nempel di container (sebagai <code>eth0</code>), ujung lain nempel di bridge <code>docker0</code> di host. Traffic keluar container lewat NAT. Docker pakai <code>ipt
