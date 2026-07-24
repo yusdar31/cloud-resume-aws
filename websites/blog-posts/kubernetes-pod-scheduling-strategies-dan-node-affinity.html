@@ -1,0 +1,264 @@
+<h1>Kubernetes Pod Scheduling Strategies dan Node Affinity: Panduan Praktis untuk Production</h1>
+
+<p>Belum lama ini, tim kami menghadapi masalah klasik di Kubernetes cluster: pod database production keburu ditaruh di node yang sama dengan workload batch processing yang sangat resource-intensive. Hasilnya? Latency naik drastis dan alert pun berbunyi. Dari situ saya sadar betapa pentingnya memahami <strong>pod scheduling strategies</strong> dan <strong>node affinity</strong> untuk menghindari insiden serupa.</p>
+
+<p>Di artikel ini, saya akan share pengalaman dan praktik terbaik dalam mengontrol bagaimana pod di-schedule ke node tertentu di Kubernetes. Kita akan bahas dari konsep dasar sampai implementasi di production.</p>
+
+<h2>Mengapa Pod Scheduling Itu Penting?</h2>
+
+<p>Secara default, Kubernetes scheduler akan menempatkan pod ke node yang tersedia berdasarkan resource request, constraint, dan beberapa faktor lain. Tapi dalam skenario nyata, kita sering butuh kontrol lebih spesifik. Misalnya:</p>
+
+<ul>
+<li><strong>Workload latency-sensitive</strong> harus di node dengan SSD</li>
+<li><strong>Database</strong> butuh node dengan memory besar</li>
+<li><strong>GPU workload</strong> hanya bisa jalan di node tertentu</li>
+
+<li><strong>Compliance requirement</strong> mengharuskan data tertentu di region spesifik</li>
+</ul>
+
+<p>Tanpa strategi scheduling yang tepat, bisa jadi workload critical kita "berkumpul" di satu node dan menyebabkan resource contention. Atau lebih parah, pod jalan di node yang tidak memenuhi requirement hardware-nya.</p>
+
+<h2>Teknik Scheduling di Kubernetes</h2>
+
+<p>Kubernetes menyediakan beberapa mekanisme untuk mengontrol scheduling, mulai dari yang paling sederhana sampai yang paling fleksibel. Mari kita bahas satu per satu.</p>
+
+<h3>1. NodeSelector: Cara Paling Sederhana</h3>
+
+<p><code>nodeSelector</code> adalah mekanisme scheduling paling basic. Kita cukup menentukan label yang harus dimiliki node untuk menampung pod tersebut.</p>
+
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: api-server
+spec:
+  nodeSelector:
+    disktype: ssd
+    zone: production
+  containers:
+  - name: api
+    image: myapp:latest
+</code></pre>
+
+<p>Pod di atas hanya akan di-schedule ke node yang memiliki label <code>disktype=ssd</code> DAN <code>zone=production</code>. Sederhana, tapi terbatas hanya untuk kondisi AND logic.</p>
+
+<h3>2. Node Affinity: Lebih Fleksibel dan Expressive</h3>
+
+<p>Node Affinity hadir dengan kemampuan yang lebih powerful. Ada dua jenis node affinity:</p>
+
+<ul>
+<li><strong>requiredDuringSchedulingIgnoredDuringExecution</strong> — Hard requirement. Pod TIDAK AKAN di-schedule jika tidak ada node yang memenuhi kriteria.</li>
+<li><strong>preferredDuringSchedulingIgnoredDuringExecution</strong> — Soft requirement. Scheduler akan berusaha mencari node yang sesuai, tapi jika tidak ada, pod tetap akan di-schedule ke node lain.</li>
+</ul>
+
+<p>Mari lihat contoh implementasi yang saya gunakan di cluster production:</p>
+
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: database-primary
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-role.kubernetes.io/database
+            operator: Exists
+          - key: memory-size
+            operator: Gt
+            values:
+            - "64"
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 80
+        preference:
+          matchExpressions:
+          - key: disk-type
+            operator: In
+            values:
+            - nvme
+      - weight: 20
+        preference:
+          matchExpressions:
+          - key: zone
+            operator: In
+            values:
+            - us-west-2a
+  containers:
+  - name: postgres
+    image: postgres:15
+</code></pre>
+
+<p>Contoh di atas menunjukkan konfigurasi untuk database primary. Pod <strong>harus</strong> berada di node dengan label <code>node-role.kubernetes.io/database</code> dan memory lebih dari 64GB. Selain itu, scheduler akan <em>mengutamakan</em> node dengan NVMe storage (weight 80) dan zone us-west-2a (weight 20).</p>
+
+<h3>Operator yang Tersedia di Node Affinity</h3>
+
+<p>Kubernetes menyediakan beberapa operator untuk matchExpressions:</p>
+
+<ul>
+<li><strong>In</strong> — Nilai label harus ada dalam list values</li>
+<li><strong>NotIn</strong> — Nilai label TIDAK boleh ada dalam list values</li>
+<li><strong>Exists</strong> — Label harus ada (nilai tidak diperhatikan)</li>
+<li><strong>DoesNotExist</strong> — Label tidak boleh ada</li>
+<li><strong>Gt</strong> — Nilai label lebih besar dari value (untuk angka)</li>
+<li><strong>Lt</strong> — Nilai label lebih kecil dari value (untuk angka)</li>
+</ul>
+
+<h2>Pod Affinity dan Anti-Affinity</h2>
+
+<p>Selain memilih node berdasarkan karakteristik node, kita juga bisa menentukan scheduling berdasarkan pod lain yang sudah berjalan. Ini sangat berguna untuk:</p>
+
+<ul>
+<li><strong>Co-locate</strong> pod yang sering berkomunikasi untuk mengurangi network latency</li>
+<li><strong>Spread</strong> pod ke node berbeda untuk high availability</li>
+</ul>
+
+<h3>Contoh: Pod Anti-Affinity untuk High Availability</h3>
+
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-frontend
+  template:
+    metadata:
+      labels:
+        app: api-frontend
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - api-frontend
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: api
+        image: myapp:latest
+</code></pre>
+
+<p>Konfigurasi di atas memastikan setiap replica deployment <code>api-frontend</code> berada di node yang berbeda. Jika ada 3 replica, mereka akan tersebar di minimal 3 node. Ini penting untuk menghindari single point of failure.</p>
+
+<h3>Pod Affinity untuk Co-location</h3>
+
+<p>Untuk skenario di mana kita ingin pod berada di node yang sama dengan pod lain (misalnya application pod dan cache pod):</p>
+
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: cache-client
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - redis-cache
+        topologyKey: kubernetes.io/hostname
+  containers:
+  - name: app
+    image: myapp:latest
+</code></pre>
+
+<h2>Topology Key: Mengontrol Spread</h2>
+
+<p>Topology key menentukan "domain" di mana affinity rule diterapkan. Nilai yang umum digunakan:</p>
+
+<ul>
+<li><strong>kubernetes.io/hostname</strong> — Level individual node</li>
+<li><strong>topology.kubernetes.io/zone</strong> — Level availability zone</li>
+<li><strong>topology.kubernetes.io/region</strong> — Level region</li>
+</ul>
+
+<p>Untuk cluster multi-zone, kita bisa mengkombinasikan topology key berbeda untuk mencapai spread yang optimal:</p>
+
+<pre><code>spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - web-server
+          topologyKey: kubernetes.io/hostname
+      - weight: 50
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - web-server
+          topologyKey: topology.kubernetes.io/zone
+</code></pre>
+
+<p>Contoh di atas akan memprioritaskan spread di level hostname (weight 100), dan juga mempertimbangkan spread di level zone (weight 50).</p>
+
+<h2>Taints dan Tolerations: Mengontrol Akses Node</h2>
+
+<p>Seringkali kita ingin node tertentu hanya bisa menampung workload spesifik. Di sinilah <strong>taints</strong> dan <strong>tolerations</strong> berperan.</p>
+
+<p>Untuk menandai node bahwa hanya pod tertentu yang boleh masuk:</p>
+
+<pre><code>kubectl taint nodes node-dedicated-gpu dedicated=gpu:NoSchedule
+</code></pre>
+
+<p>Lalu di pod spec, kita tambahkan toleration:</p>
+
+<pre><code>spec:
+  tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "gpu"
+    effect: "NoSchedule"
+  containers:
+  - name: gpu-workload
+    image: ml-training:latest
+</code></pre>
+
+<p>Effect yang tersedia:</p>
+
+<ul>
+<li><strong>NoSchedule</strong> — Pod tanpa toleration tidak akan di-schedule ke node tersebut</li>
+<li><strong>PreferNoSchedule</strong> — Scheduler akan menghindari node, tapi tetap bisa menempatkan pod jika tidak ada pilihan</li>
+<li><strong>NoExecute</strong> — Pod yang sudah berjalan akan di-evict jika tidak memiliki toleration</li>
+</ul>
+
+<h2>Best Practices dari Pengalaman Production</h2>
+
+<p>Setelah mengelola cluster production selama beberapa tahun, ini yang saya pelajari:</p>
+
+<ol>
+<li><strong>Gunakan nodeSelector untuk kasus sederhana</strong>. Tidak perlu over-engineering dengan node affinity jika kebutuhan hanya label matching dasar.</li>
+
+<li><strong>Kombinasi required dan preferred affinity</strong>. Gunakan required untuk requirement yang tidak bisa ditawar, dan preferred untuk preferensi yang bisa diabaikan jika tidak memungkinkan.</li>
+
+<li><strong>Label node dengan konsisten</strong>. Buat standardisasi label di seluruh cluster. Saya biasa menggunakan label seperti <code>node-pool</code>, <code>workload-type</code>, dan <code>hardware-type</code>.</li>
+
+<li><strong>Monitor scheduling failures</strong>. Event di Kubernetes bisa memberikan insight mengapa pod gagal di-schedule: <code>kubectl get events --field-selector reason=FailedScheduling</code></li>
+
+<li><strong>Test dengan dry-run</strong>. Sebelum apply ke production, gunakan <code>kubectl apply --dry-run=server</code> untuk memvalidasi konfigurasi.</li>
+
+<li><strong>Jangan lupa resource request</strong>. Affinity rules tidak akan bekerja optimal tanpa resource request yang proper. Scheduler butuh informasi ini untuk keputusan placement.</li>
+</ol>
+
+<h2>Kesimpulan</h2>
+
+<p>Pod scheduling strategies di Kubernetes memberikan kontrol granular atas bagaimana workload kita tersebar di cluster. Node affinity dan pod affinity/anti-affinity adalah tools yang powerful untuk mengoptimalkan performa, reliability, dan resource utilization.</p>
+
+<p>Dari pengalaman saya, kombinasi yang efektif biasanya adalah: gunakan <strong>nodeSelector</strong> untuk constraint sederhana, <strong>node affinity</strong> untuk requirement hardware atau zone yang kompleks, <strong>pod anti-affinity</strong> untuk high availability, dan <strong>taints/tolerations</strong> untuk dedicated node pools.</p>
+
+<p>Yang terpenting, selalu dokumentasikan keputusan scheduling yang diambil. Trust me, enam bulan dari sekarang kamu akan lupa kenapa pod itu harus di node dengan label tertentu. Sampai jumpa di artikel selanjutnya!</p>

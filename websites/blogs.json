@@ -90,6 +90,19 @@
       ],
       "status": "published",
       "contentPath": "blog-posts/docker-networking-deep-dive-bridge-host-dan-overlay-network.html"
+    },
+    {
+      "id": 8,
+      "title": "Kubernetes Pod Scheduling Strategies dan Node Affinity",
+      "date": "2026-07-24",
+      "description": "h di node yang sama dengan workload batch processing yang sangat resource-intensive. Hasilnya? Latency naik drastis dan alert pun berbunyi. Dari situ saya sadar betapa pentingnya m...",
+      "readTime": "6 min read",
+      "tags": [
+        "Kubernetes",
+        "DevOps"
+      ],
+      "status": "published",
+      "contentPath": "blog-posts/kubernetes-pod-scheduling-strategies-dan-node-affinity.html"
     }
   ]
 }
