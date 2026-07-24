@@ -10,43 +10,27 @@ on:
 jobs:
   deploy:
     name: Deploy to Server
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Copy websites ke server via SCP
-        run: |
-          scp -i ~/.ssh/deploy_key -r websites/* \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/cloud-resume-deploy/
-
       - name: Deploy ke Docker container
         run: |
-          ssh -i ~/.ssh/deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
-            set -e
-            CONTAINER="cloud-resume-web"
-            WEBROOT="/usr/share/nginx/html"
-            DEPLOY_DIR="/tmp/cloud-resume-deploy"
+          set -e
+          CONTAINER="cloud-resume-web"
+          WEBROOT="/usr/share/nginx/html"
 
-            docker cp "$DEPLOY_DIR/." "$CONTAINER:$WEBROOT/"
-            rm -rf "$DEPLOY_DIR"
-            echo "Deploy selesai: $(date)"
-          ENDSSH
+          docker cp websites/. "$CONTAINER:$WEBROOT/"
+          echo "Deploy selesai: $(date)"
 
       - name: Verify deployment
         run: |
-          sleep 3
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.SERVER_HOST }}:8080/)
+          sleep 2
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/)
           if [ "$HTTP_CODE" != "200" ]; then
             echo "Verify gagal: HTTP $HTTP_CODE"
             exit 1
           fi
-          echo "Website accessible: HTTP $HTTP_CODE"
+          echo "Website OK: HTTP $HTTP_CODE"
