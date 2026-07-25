@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'websites/**'
+      - 'websites/blog-posts/**'
+      - 'websites/blogs.json'
 
 jobs:
   deploy:
@@ -16,13 +17,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy ke Docker container
+      - name: Deploy blog-posts dan blogs.json ke container
         run: |
           set -e
           CONTAINER="cloud-resume-web"
           WEBROOT="/usr/share/nginx/html"
 
-          docker cp websites/. "$CONTAINER:$WEBROOT/"
+          docker cp websites/blogs.json "$CONTAINER:$WEBROOT/blogs.json"
+
+          for f in websites/blog-posts/*.html; do
+            [ -f "$f" ] || continue
+            docker cp "$f" "$CONTAINER:$WEBROOT/blog-posts/$(basename $f)"
+          done
+
           echo "Deploy selesai: $(date)"
 
       - name: Verify deployment
