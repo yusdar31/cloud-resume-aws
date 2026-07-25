@@ -103,6 +103,19 @@
       ],
       "status": "published",
       "contentPath": "blog-posts/kubernetes-pod-scheduling-strategies-dan-node-affinity.html"
+    },
+    {
+      "id": 9,
+      "title": "AWS Lambda Cold Start Optimization Techniques",
+      "date": "2026-07-25",
+      "description": ".\" Setelah investigasi, ternyata bukan database lambat, bukan network issue, tapi cold start AWS Lambda yang jadi biang keladi. Sejak saat itu, saya jadi rajin \"berperang\" melawan ...",
+      "readTime": "6 min read",
+      "tags": [
+        "AWS",
+        "Cloud"
+      ],
+      "status": "published",
+      "contentPath": "blog-posts/aws-lambda-cold-start-optimization-techniques.html"
     }
   ]
 }
