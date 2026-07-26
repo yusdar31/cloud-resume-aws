@@ -116,6 +116,19 @@
       ],
       "status": "published",
       "contentPath": "blog-posts/aws-lambda-cold-start-optimization-techniques.html"
+    },
+    {
+      "id": 10,
+      "title": "Linux Disk Space Monitoring dengan Script Otomatis",
+      "date": "2026-07-26",
+      "description": "alam, pas lagi enak-enaknya tidur. Notifikasi WhatsApp masuk, alert dari monitoring system: \"CRITICAL: Disk usage on web-prod-01 exceeded 95%\". Setelah insiden itu, saya vowed untu...",
+      "readTime": "6 min read",
+      "tags": [
+        "Linux",
+        "SysAdmin"
+      ],
+      "status": "published",
+      "contentPath": "blog-posts/linux-disk-space-monitoring-dengan-script-otomatis.html"
     }
   ]
 }

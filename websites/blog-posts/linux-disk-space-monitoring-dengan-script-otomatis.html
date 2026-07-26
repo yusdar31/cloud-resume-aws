@@ -1,0 +1,260 @@
+<h1>Linux Disk Space Monitoring dengan Script Otomatis: Panduan Praktis dari Lapangan</h1>
+
+<p>Pernah gak sih tiba-tiba server down, gara-gara disk space penuh? Saya pernah. Dan itu terjadi di production, tengah malam, pas lagi enak-enaknya tidur. Notifikasi WhatsApp masuk, alert dari monitoring system: <strong>"CRITICAL: Disk usage on web-prod-01 exceeded 95%"</strong>. Setelah insiden itu, saya vowed untuk tidak pernah lagi kecolongan. Artikel ini saya tulis berdasarkan pengalaman nyata di lapangan, bagaimana cara setup monitoring disk space otomatis di Linux.</p>
+
+<h2>Kenapa Monitoring Disk Space Itu Penting?</h2>
+
+<p>Banyak engineer yang underestimate masalah disk space. Mereka pikir, "Server baru, disk 500GB, masa iya cepet penuh?" Well, ternyata log file yang tidak di-rotate bisa makan puluhan GB per hari. Backup file yang lupa di-cleanup, Docker images yang menumpuk, atau database yang terus grow tanpa ada maintenance plan.</p>
+
+<p>Beberapa konsekuensi jika disk space penuh:</p>
+<ul>
+<li><strong>Application crash</strong> - Aplikasi tidak bisa write ke disk, langsung error</li>
+<li><strong>Database corruption</strong> - MySQL/PostgreSQL bisa corrupt kalau tiba-tiba kehabisan space</li>
+<li><strong>System instability</strong> - OS butuh space untuk swap, temporary files, dan proses internal</li>
+<li><strong>Data loss</strong> - Worst case scenario, log atau data penting hilang</li>
+</ul>
+
+<h2>Membuat Script Monitoring Dasar</h2>
+
+<p>Oke, langsung ke intinya. Kita mulai dari script sederhana dulu. Script ini akan mengecek disk usage dan mengirimkan notifikasi jika melebihi threshold tertentu.</p>
+
+<pre><code>#!/bin/bash
+
+# ============================================
+# Disk Space Monitoring Script
+# Author: [Your Name]
+# ============================================
+
+THRESHOLD=85
+EMAIL="ops-team@company.com"
+HOSTNAME=$(hostname)
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
+
+# Loop semua mounted filesystem
+df -h | grep -E '^/dev/' | while read line; do
+    USAGE=$(echo $line | awk '{print $5}' | tr -d '%')
+    MOUNT=$(echo $line | awk '{print $6}')
+    SIZE=$(echo $line | awk '{print $2}')
+    USED=$(echo $line | awk '{print $3}')
+    AVAIL=$(echo $line | awk '{print $4}')
+
+    if [ "$USAGE" -ge "$THRESHOLD" ]; then
+        MSG="⚠️ DISK SPACE WARNING
+
+Host: $HOSTNAME
+Time: $DATE
+Mount Point: $MOUNT
+Total: $SIZE | Used: $USED | Available: $AVAIL
+Usage: ${USAGE}% (Threshold: ${THRESHOLD}%)
+
+Please investigate immediately."
+
+        echo "$MSG" | mail -s "[CRITICAL] Disk Space Alert - $HOSTNAME" $EMAIL
+        echo "[$DATE] ALERT: $MOUNT at ${USAGE}% - email sent" >> /var/log/disk_monitor.log
+    else
+        echo "[$DATE] OK: $MOUNT at ${USAGE}%" >> /var/log/disk_monitor.log
+    fi
+done</code></pre>
+
+<p>Simpan script ini sebagai <code>/usr/local/bin/disk_monitor.sh</code>, lalu berikan permission executable:</p>
+
+<pre><code>sudo chmod +x /usr/local/bin/disk_monitor.sh</code></pre>
+
+<h2>Meningkatkan ke Telegram Notification</h2>
+
+<p>Di era sekarang, email kadang terlambat dibaca. Saya pribadi lebih suka notifikasi masuk ke Telegram karena lebih instant. Berikut versi yang sudah saya modify untuk mengirim alert ke Telegram:</p>
+
+<pre><code>#!/bin/bash
+
+THRESHOLD=85
+TELEGRAM_TOKEN="YOUR_BOT_TOKEN"
+CHAT_ID="YOUR_CHAT_ID"
+HOSTNAME=$(hostname)
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
+
+send_telegram() {
+    local message="$1"
+    curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+        -d chat_id="${CHAT_ID}" \
+        -d text="${message}" \
+        -d parse_mode="HTML" > /dev/null
+}
+
+df -h --output=source,size,used,avail,pcent,target -x tmpfs -x devtmpfs | tail -n +2 | while read line; do
+    USAGE=$(echo $line | awk '{print $5}' | tr -d '%')
+    MOUNT=$(echo $line | awk '{print $6}')
+
+    if [ "$USAGE" -ge "$THRESHOLD" ]; then
+        MSG="<b>🔴 DISK SPACE ALERT</b>%0A%0A"
+        MSG+="<b>Host:</b> ${HOSTNAME}%0A"
+        MSG+="<b>Time:</b> ${DATE}%0A"
+        MSG+="<b>Mount:</b> ${MOUNT}%0A"
+        MSG+="<b>Usage:</b> ${USAGE}%%0A%0A"
+        MSG+="Please investigate!"
+
+        send_telegram "$MSG"
+        logger -t disk_monitor "CRITICAL: ${MOUNT} at ${USAGE}%"
+    fi
+done</code></pre>
+
+<p>Kenapa saya pakai <code>logger</code> juga? Karena selain kirim ke Telegram, saya ingin ada record di system log. Double logging, double safety. Kalau Telegram down, masih bisa cek di <code>/var/log/syslog</code>.</p>
+
+<h2>Jadwalkan dengan Cron</h2>
+
+<p>Script tanpa scheduling itu seperti alarm yang tidak diset. Percuma. Mari kita jadwalkan agar berjalan otomatis setiap 5 menit:</p>
+
+<pre><code>crontab -e</code></pre>
+
+<p>Tambahkan baris berikut:</p>
+
+<pre><code># Disk space monitoring - setiap 5 menit
+*/5 * * * * /usr/local/bin/disk_monitor.sh > /dev/null 2>&1
+
+# Cleanup old logs - setiap hari jam 3 pagi
+0 3 * * * find /var/log -name "*.gz" -mtime +30 -delete</code></pre>
+
+<p>Perhatikan saya juga menambahkan baris cleanup log. Monitoring tanpa housekeeping itu tidak lengkap. Kita perlu memastikan log monitoring sendiri juga tidak menjadi problem di kemudian hari.</p>
+
+<h2>Versi Production-Ready dengan Level Berbeda</h2>
+
+<p>Di production, saya menggunakan pendekatan tiga level. Ini penting karena tidak semua situasi butuh response yang sama:</p>
+
+<ol>
+<li><strong>Warning (80%)</strong> - Kirim notifikasi ke Slack channel</li>
+<li><strong>Critical (90%)</strong> - Kirim ke Telegram + email ke on-call engineer</li>
+<li><strong>Emergency (95%)</strong> - Auto-cleanup log lama + notifikasi ke semua channel</li>
+</ol>
+
+<pre><code>#!/bin/bash
+
+# Threshold levels
+WARN_THRESHOLD=80
+CRIT_THRESHOLD=90
+EMER_THRESHOLD=95
+
+# Notification configs
+SLACK_WEBHOOK="https://hooks.slack.com/services/xxx"
+TELEGRAM_TOKEN="YOUR_TOKEN"
+CHAT_ID="YOUR_ID"
+ONCALL_EMAIL="oncall@company.com"
+
+HOSTNAME=$(hostname)
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
+
+send_slack() {
+    local msg="$1"
+    local color="$2"
+    curl -s -X POST "$SLACK_WEBHOOK" \
+        -H 'Content-type: application/json' \
+        -d "{\"attachments\":[{\"color\":\"${color}\",\"text\":\"${msg}\"}]}" > /dev/null
+}
+
+send_telegram() {
+    local msg="$1"
+    curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+        -d chat_id="${CHAT_ID}" \
+        -d text="${msg}" > /dev/null
+}
+
+auto_cleanup() {
+    echo "[${DATE}] Emergency cleanup triggered" >> /var/log/disk_monitor.log
+
+    # Hapus log lama
+    find /var/log -name "*.log.*" -mtime +7 -delete 2>/dev/null
+    find /var/log -name "*.gz" -mtime +3 -delete 2>/dev/null
+
+    # Cleanup Docker (jika ada)
+    if command -v docker &> /dev/null; then
+        docker system prune -f --volumes 2>/dev/null
+    fi
+
+    # Cleanup package manager cache
+    apt-get clean 2>/dev/null || yum clean all 2>/dev/null
+}
+
+df -h --output=source,size,used,avail,pcent,target -x tmpfs -x devtmpfs 2>/dev/null | tail -n +2 | while read line; do
+    USAGE=$(echo $line | awk '{print $5}' | tr -d '%')
+    MOUNT=$(echo $line | awk '{print $6}')
+    AVAIL=$(echo $line | awk '{print $4}')
+    SIZE=$(echo $line | awk '{print $2}')
+
+    if [ "$USAGE" -ge "$EMER_THRESHOLD" ]; then
+        MSG="🚨 EMERGENCY: ${HOSTNAME} disk ${MOUNT} at ${USAGE}% (${AVAIL} free of ${SIZE})"
+        send_slack "$MSG" "danger"
+        send_telegram "$MSG"
+        echo "$MSG" | mail -s "[EMERGENCY] Disk Space - $HOSTNAME" "$ONCALL_EMAIL"
+        auto_cleanup
+        logger -t disk_monitor -p local0.crit "EMERGENCY: ${MOUNT} at ${USAGE}%"
+
+    elif [ "$USAGE" -ge "$CRIT_THRESHOLD" ]; then
+        MSG="🔴 CRITICAL: ${HOSTNAME} disk ${MOUNT} at ${USAGE}% (${AVAIL} free)"
+        send_slack "$MSG" "danger"
+        send_telegram "$MSG"
+        logger -t disk_monitor -p local0.err "CRITICAL: ${MOUNT} at ${USAGE}%"
+
+    elif [ "$USAGE" -ge "$WARN_THRESHOLD" ]; then
+        MSG="🟡 WARNING: ${HOSTNAME} disk ${MOUNT} at ${USAGE}% (${AVAIL} free)"
+        send_slack "$MSG" "warning"
+        logger -t disk_monitor -p local0.warning "WARNING: ${MOUNT} at ${USAGE}%"
+    fi
+done</code></pre>
+
+<p>Script di atas sudah saya pakai di beberapa production server selama lebih dari setahun. Works like a charm. Tidak perlu prometheus, tidak perlu grafana, cukup bash script + cron. <strong>KISS principle</strong> selalu menang untuk use case seperti ini.</p>
+
+<h2>Tips Tambahan dari Pengalaman</h2>
+
+<h3>1. Gunakan <code>inodes</code> Monitoring Juga</h3>
+
+<p>Banyak orang tidak tahu bahwa disk bisa penuh karena inodes habis, bukan karena space. Ini sering terjadi di server dengan banyak small files (think: mail server, cache server):</p>
+
+<pre><code># Cek inode usage
+df -i | grep -E '^/dev/'
+
+# Threshold warning di 80%
+INODE_USAGE=$(df -i / | tail -1 | awk '{print $5}' | tr -d '%')</code></pre>
+
+<h3>2. Pantau Directory Spesifik yang Rawan</h3>
+
+<p>Beberapa directory yang sering menjadi penyebab disk space habis:</p>
+
+<pre><code># Top 10 direktori terbesar
+du -h --max-depth=1 / 2>/dev/null | sort -rh | head -10
+
+# Log files
+du -sh /var/log/* 2>/dev/null | sort -rh | head -10
+
+# Docker images (jika pakai Docker)
+docker system df</code></pre>
+
+<h3>3. Setup Logrotate</h3>
+
+<p>Jangan lupa setup logrotate untuk aplikasi custom yang kalian bangun. Jangan andalkan cron cleanup semata:</p>
+
+<pre><code>/var/log/myapp/*.log {
+    daily
+    rotate 14
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 www-data adm
+    sharedscripts
+    postrotate
+        systemctl reload myapp > /dev/null 2>&1 || true
+    endscript
+}</code></pre>
+
+<h2>Kesimpulan</h2>
+
+<p>Monitoring disk space itu fundamental, tapi sering dilupakan sampai masalah datang. Dengan script otomatis sederhana, kalian bisa prevent problem sebelum terjadi. Mulai dari script bash dasar, setup cron, sampai notification multi-channel - semua bisa diimplementasi dalam waktu kurang dari satu jam.</p>
+
+<p>Poin penting yang perlu diingat:</p>
+<ul>
+<li><strong>Mulai sekarang</strong> - Jangan tunggu sampai kena masalah</li>
+<li><strong>Threshold yang tepat</strong> - 80% untuk warning, 90% untuk critical</li>
+<li><strong>Multiple notification channels</strong> - Jangan hanya andalkan satu channel</li>
+<li><strong>Auto-cleanup sebagai safety net</strong> - Untuk emergency situations</li>
+<li><strong>Monitoring inodes juga</strong> - Bukan hanya disk space</li>
+</ul>
+
+<p>Dari pengalaman saya, script sederhana seperti ini sudah menyelamatkan saya dari banyak malam yang tidak tenang. Kalau ada pertanyaan atau punya tips lain, feel free untuk share. Happy monitoring!</p>
